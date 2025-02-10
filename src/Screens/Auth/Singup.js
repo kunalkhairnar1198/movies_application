@@ -3,12 +3,12 @@ import { View,  StyleSheet, Text, ImageBackground, TouchableOpacity, TouchableWi
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import LinearGradient from 'react-native-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
 
 import TextInput from '../../Components/Input/Textinput';
 import IMAGES from '../../constants/images';
 import  COLORS  from '../../constants/colors';
 import FONT_SIZES from '../../constants/text';
-import { useNavigation } from '@react-navigation/native';
 import CustomButton from '../../Components/Button/CustomButton';
 
 const Singup = () => {
@@ -128,8 +128,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   button: {
-    padding: 15,
-    borderRadius: 10,
+    padding: 13,
+    borderRadius: 30,
     alignItems: 'center',
     elevation:5,
     shadowColor: "#282828"

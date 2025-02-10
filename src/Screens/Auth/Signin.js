@@ -5,16 +5,17 @@ import {
   Text,
   ImageBackground,
   TouchableWithoutFeedback,
+  StatusBar,
 } from 'react-native';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
+import {useNavigation} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import TextInput from '../../Components/Input/Textinput';
 import IMAGES from '../../constants/images';
 import COLORS from '../../constants/colors';
 import FONT_SIZES from '../../constants/text';
-import {useNavigation} from '@react-navigation/native';
 import CustomButton from '../../Components/Button/CustomButton';
 
 const Signin = () => {
@@ -30,7 +31,9 @@ const Signin = () => {
   });
 
   return (
-    <ImageBackground
+   <View style={styles.container}> 
+      <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
+      <ImageBackground
       source={IMAGES.BG_LOGIN_IMG}
       style={styles.background}
       resizeMode="cover">
@@ -45,6 +48,7 @@ const Signin = () => {
           validationSchema={userSchema}
           onSubmit={(values, {resetForm}) => {
             console.log(values);
+            naviagation.navigate('Hometab')
             resetForm();
           }}>
           {({handleSubmit}) => (
@@ -87,15 +91,20 @@ const Signin = () => {
         </View>
       </LinearGradient>
     </ImageBackground>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container:{
+    flex:1
+  },
   background: {
     flex: 1,
     position: 'relative',
     width: '100%',
-    height: '100%',
+    // height: '100%',
+    ...StyleSheet.absoluteFillObject
   },
   linearGradient: {
     flex: 1,
@@ -117,8 +126,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   button: {
-    padding: 15,
-    borderRadius: 10,
+    padding: 13,
+    borderRadius: 30,
     alignItems: 'center',
     elevation:5,
     shadowColor: "#282828"

@@ -1,13 +1,15 @@
 import {  Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import COLORS from '../../constants/colors'
 import { useDispatch, useSelector } from 'react-redux'
-import { getPopularMovies, getTrendingMovies } from '../../Store/movie-slice/movieslice'
-import Carousel from 'react-native-reanimated-carousel'
-import { ColorSpace, useSharedValue } from 'react-native-reanimated'
+import {  useSharedValue } from 'react-native-reanimated'
 import { useEffect } from 'react'
+import { getPopularMovies, getTrendingMovies } from '../../Store/movie-slice/movieslice'
+
 import CarouselItem from '../../Components/CarouselItem/CarouselItem'
 import MoviesList from '../../Components/Movies/MoviesList/MoviesList'
+import Carousel from 'react-native-reanimated-carousel'
+import COLORS from '../../constants/colors'
+
 
 
 const width = Dimensions.get('window').width
@@ -32,7 +34,7 @@ const Homescreen = () => {
   return (                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
     <SafeAreaView style={styles.container}>
       <ScrollView>
-      <View style={styles.containerc}>
+      <View >
             <Carousel
               data={TrendingMovies}
               width={width}
@@ -51,10 +53,11 @@ const Homescreen = () => {
               )}
             />
       </View>
-      <View style={styles.popularMovies}>
-        <Text style={styles.texttitle}>Popular Movies</Text>
-        <MoviesList popularMovies={PopularMovies} />
-      </View>
+
+        <View style={styles.popularMovies}>
+          <Text style={styles.texttitle}>Popular Movies</Text>
+          <MoviesList popularMovies={PopularMovies} />
+        </View>
       </ScrollView>
     </SafeAreaView>
   )

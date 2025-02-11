@@ -1,17 +1,21 @@
-import Homescreen from '../../Screens/Home/Homescreen';
-import Profilescreen from '../../Screens/Profile/Profilescreen';
 import {
   SafeAreaProvider,
   SafeAreaView,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {StatusBar, StyleSheet, Text} from 'react-native';
+import {StatusBar, StyleSheet} from 'react-native';
+
 
 import COLORS from '../../constants/colors';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Iconpro from 'react-native-vector-icons/Feather';
+
 import Header from '../../Components/Navbar/Header';
+import Favoritescreen from '../../Screens/Favorite/Favoritescreen';
+import Homescreen from '../../Screens/Home/Homescreen';
+import Profilescreen from '../../Screens/Profile/Profilescreen';
+
 
 const TabNavigation = () => {
   const Tab = createBottomTabNavigator();
@@ -20,7 +24,7 @@ const TabNavigation = () => {
   const screenOptions = {
     tabBarHideOnKeyboard:true,
     tabBarActiveTintColor: COLORS.PRIMARY,
-    tabBarInactiveTintColor: 'gray',
+    tabBarInactiveTintColor: '#0f9e9e',
   };
 
   return (
@@ -41,11 +45,31 @@ const TabNavigation = () => {
                 backgroundColor:COLORS.SECONDARY,
               },
               tabBarIcon: ({focused, color}) => (
-                <Icon name="home" size={30} color={focused ? color : '#000'} />
+                <Icon name="home" size={30} color={color} />
               ),  
               header:({options})=>(
                 <Header {...options}/>
               )
+            }}
+          />
+           <Tab.Screen
+            name="Favorite"
+            component={Favoritescreen}
+            options={{
+              title: 'Favorite',
+              animation: 'fade',
+              // headerShown: false,
+              tabBarStyle: {
+                height: 60 + insets.bottom,
+                backgroundColor:COLORS.SECONDARY,
+              },
+              tabBarIcon: ({focused, color}) => (
+                <Iconpro
+                  name="heart"
+                  size={30}
+                  color={color}
+                />
+              ),
             }}
           />
 
@@ -55,7 +79,7 @@ const TabNavigation = () => {
             options={{
               title: 'Profile',
               animation: 'fade',
-              headerShown: false,
+              // headerShown: false,
               tabBarStyle: {
                 height: 60 + insets.bottom,
                 backgroundColor:COLORS.SECONDARY,
@@ -64,7 +88,7 @@ const TabNavigation = () => {
                 <Iconpro
                   name="user"
                   size={30}
-                  color={focused ? color : '#000'}
+                  color={color}
                 />
               ),
             }}

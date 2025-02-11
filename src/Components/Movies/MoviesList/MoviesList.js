@@ -3,7 +3,8 @@ import { FlatList, StyleSheet, View } from 'react-native'
 import MovieItem from '../Moviesitem/MovieItem'
 
 const MoviesList = ({popularMovies}) => {
-    console.log(popularMovies)
+    // console.log(popularMovies)
+
   return (
     <View style={styles.container}>
     <FlatList

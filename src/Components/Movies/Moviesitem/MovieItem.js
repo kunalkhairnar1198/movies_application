@@ -12,15 +12,15 @@ const MovieItem = ({item}) => {
           {width: width * 0.4, height: height * 0.3},
         ]}>
         <ImageBackground
-          source={{uri: image500(item.poster_path)}}
+          source={{uri: image500(item?.poster_path)}}
           style={styles.imageBackground}
           imageStyle={styles.imageStyle}>
           {/* <TouchableOpacity onPress={() => switchToDetailPageHandler(item)}> */}
             <View style={styles.textContainer}>
-              <Text style={styles.movieTitle}>{item.title}</Text>
+              <Text style={styles.movieTitle}>{item?.title}</Text>
               <View style={styles.bottomSection}>
                 <Text style={styles.movieRating}>
-                  IMDb: {item.vote_average.toFixed(1)}
+                  IMDb: {item?.vote_average?.toFixed(1)}
                 </Text>
                 <Text style={styles.movieTiming}>{'2h 30m'}</Text>
               </View>

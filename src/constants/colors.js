@@ -1,6 +1,6 @@
 const COLORS = {
     // Primary Colors
-    PRIMARY: '#04AB9F',       // Main Theme Color (Buttons, Highlights)
+    PRIMARY: '#1af4f0',       // Main Theme Color (Buttons, Highlights)
     SECONDARY: '#303D4F',      // Secondary Theme Color (Headers, Cards)
   
     // Background Colors

@@ -1,19 +1,20 @@
 import React from 'react'
-import { SafeAreaView, StatusBar } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native'
 import Appnavigationstack from './src/Navigations/Appnavigationstack'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
-import COLORS from './src/constants/colors'
 
 
 const App = () => {
   
   return (
     <>
-      <NavigationContainer>
+    <GestureHandlerRootView style={{flex:1}}>
+    <NavigationContainer>
           <Appnavigationstack/>
-      </NavigationContainer>        
-    </>
+      </NavigationContainer>  
+    </GestureHandlerRootView>
+     
+      </>
   )
 }
 

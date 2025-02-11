@@ -10,11 +10,11 @@ const Header = (props) => {
   return (
     <View style={styles.container}>
     <View style={styles.profile}>
-        <ProfileIcon name='user' color={COLORS.PRIMARY} size={30}/>
+        <ProfileIcon name='user' color={COLORS.PRIMARY} size={40}/>
         <Text style={styles.profileTitle}>Hello</Text>
     </View>
     <View style={styles.search}>
-    <Search name='search' color={COLORS.PRIMARY} size={30}/>
+    <Search name='search' color={COLORS.PRIMARY} size={40}/>
     </View>
   </View>
   )
@@ -22,7 +22,7 @@ const Header = (props) => {
 
 const styles = StyleSheet.create({
     container:{
-        padding:20,
+        padding:30,
         flexDirection:'row',
         justifyContent:'space-between',
         alignItems:'center',
@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
     profileTitle:{
         paddingHorizontal:10,
         fontWeight:'bold',
-        fontSize:25
+        fontSize:30,
+        color:COLORS.TEXT_PRIMARY,
     },
     search:{
         flexDirection:'row',

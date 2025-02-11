@@ -1,40 +1,37 @@
-import {  Dimensions, StyleSheet, Text, View } from 'react-native'
+import {  Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import COLORS from '../../constants/colors'
 import { useDispatch, useSelector } from 'react-redux'
-import { getTrendingMovies } from '../../Store/movie-slice/movieslice'
+import { getPopularMovies, getTrendingMovies } from '../../Store/movie-slice/movieslice'
 import Carousel from 'react-native-reanimated-carousel'
-import { useSharedValue } from 'react-native-reanimated'
+import { ColorSpace, useSharedValue } from 'react-native-reanimated'
 import { useEffect } from 'react'
 import CarouselItem from '../../Components/CarouselItem/CarouselItem'
+import MoviesList from '../../Components/Movies/MoviesList/MoviesList'
 
 
 const width = Dimensions.get('window').width
 
 
-const data = [
-  { id: "1", color: "#B0604D", text: "Slide 1" },
-  { id: "2", color: "#899F9C", text: "Slide 2" },
-  { id: "3", color: "#B3C680", text: "Slide 3" },
-  { id: "4", color: "#5C6265", text: "Slide 4" },
-  { id: "5", color: "#F5D399", text: "Slide 5" },
-];
-
-
 const Homescreen = () => {
   const TrendingMovies = useSelector(state => state.movies.trendingMovies)
+  const PopularMovies = useSelector(state => state.movies.popularMovies)
+
   const dispatch = useDispatch()
-    const progress = useSharedValue(0);
+  const progress = useSharedValue(0);
   
 
   console.log(TrendingMovies)
+  console.log(PopularMovies)
 
   useEffect(()=>{
     dispatch(getTrendingMovies())
+    dispatch(getPopularMovies())
   },[])
 
   return (                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
     <SafeAreaView style={styles.container}>
+      <ScrollView>
       <View style={styles.containerc}>
             <Carousel
               data={TrendingMovies}
@@ -54,9 +51,11 @@ const Homescreen = () => {
               )}
             />
       </View>
-    <View style={styles.itemContainer}>
-    <Text style={{color:'white'}}>Homescreen</Text>    
-    </View>
+      <View style={styles.popularMovies}>
+        <Text style={styles.texttitle}>Popular Movies</Text>
+        <MoviesList popularMovies={PopularMovies} />
+      </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }
@@ -65,19 +64,18 @@ const styles = StyleSheet.create({
     container:{
         flex:1,
         alignItems:'center',
-        justifyContent:'center',
+        justifyContent:'space-between',
         backgroundColor:COLORS.BACKGROUND,
+        padding:10
     },
-    containerc: {
-      flex: 1,
-      justifyContent: "flex-start",
-      // alignItems: 'flex-start',
-    }, 
-    text: {
-      color: "#fff",
-      fontSize: 20,
-      fontWeight: "bold",
+    popularMovies:{
+      marginVertical:30
     },
+    texttitle:{
+      fontWeight:'semibold',
+      fontSize:25,
+      color:COLORS.TEXT_PRIMARY,
+    }
    
 })
 

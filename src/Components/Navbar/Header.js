@@ -1,21 +1,27 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+
 import Search from 'react-native-vector-icons/FontAwesome'
 import ProfileIcon  from 'react-native-vector-icons/Feather'
 import COLORS from '../../constants/colors'
 
+import { useNavigation } from '@react-navigation/native'
 
-const Header = (props) => {
-    console.log(props)
-  return (
+
+const Header = () => {
+    const navigation = useNavigation()
+
+    return (
     <View style={styles.container}>
     <View style={styles.profile}>
         <ProfileIcon name='user' color={COLORS.PRIMARY} size={40}/>
         <Text style={styles.profileTitle}>Hello</Text>
     </View>
-    <View style={styles.search}>
-    <Search name='search' color={COLORS.PRIMARY} size={40}/>
-    </View>
+    <TouchableOpacity onPress={()=>navigation.navigate('Searchscreen')}>
+        <View style={styles.search}>
+            <Search name='search' color={COLORS.PRIMARY} size={40}/>
+        </View>
+    </TouchableOpacity>
   </View>
   )
 }

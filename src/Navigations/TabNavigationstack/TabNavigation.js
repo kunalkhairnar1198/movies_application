@@ -4,7 +4,8 @@ import {
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {StatusBar, StyleSheet} from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import {StatusBar} from 'react-native';
 
 
 import COLORS from '../../constants/colors';
@@ -15,10 +16,13 @@ import Header from '../../Components/Navbar/Header';
 import Favoritescreen from '../../Screens/Favorite/Favoritescreen';
 import Homescreen from '../../Screens/Home/Homescreen';
 import Profilescreen from '../../Screens/Profile/Profilescreen';
+import Searchscreen from '../../Screens/Search/Searchscreen';
 
 
-const TabNavigation = () => {
-  const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+const TabNavigation = ({navigation}) => {
   const insets = useSafeAreaInsets();
 
   const screenOptions = {
@@ -32,24 +36,21 @@ const TabNavigation = () => {
       <SafeAreaView style={{flex: 1}}>
         <StatusBar animated={true} backgroundColor={COLORS.PRIMARY} />
 
-        <Tab.Navigator initialRouteName="Home" screenOptions={screenOptions}>
+        <Tab.Navigator  screenOptions={screenOptions}>
           <Tab.Screen
-            name="Home"
-            component={Homescreen}
+            name="Homestack"
+            component={HomestackNav}
             options={{
               title: 'Home',
+              headerShown:false,
               animation: 'fade',
-              headerTransparent:true,
               tabBarStyle: {
                 height: 60 + insets.bottom,
                 backgroundColor:COLORS.SECONDARY,
               },
-              tabBarIcon: ({focused, color}) => (
+              tabBarIcon: ({ color}) => (
                 <Icon name="home" size={30} color={color} />
               ),  
-              header:({options})=>(
-                <Header {...options}/>
-              )
             }}
           />
            <Tab.Screen
@@ -58,12 +59,11 @@ const TabNavigation = () => {
             options={{
               title: 'Favorite',
               animation: 'fade',
-              // headerShown: false,
               tabBarStyle: {
                 height: 60 + insets.bottom,
                 backgroundColor:COLORS.SECONDARY,
               },
-              tabBarIcon: ({focused, color}) => (
+              tabBarIcon: ({ color}) => (
                 <Iconpro
                   name="heart"
                   size={30}
@@ -84,7 +84,7 @@ const TabNavigation = () => {
                 height: 60 + insets.bottom,
                 backgroundColor:COLORS.SECONDARY,
               },
-              tabBarIcon: ({focused, color}) => (
+              tabBarIcon: ({ color}) => (
                 <Iconpro
                   name="user"
                   size={30}
@@ -99,9 +99,23 @@ const TabNavigation = () => {
   );
 };
 
-const style = StyleSheet.create({
-  // tabbarContainer:{
-  //     height:10
-  // }
-});
+
+const HomestackNav =()=>{
+  return(
+    <Stack.Navigator initialRouteName='Homescreen'>
+      <Stack.Screen name='Homescreen' 
+      component={Homescreen} 
+      options={{
+        animation: 'fade',
+        headerTransparent:true,
+        header:({options})=>(
+          <Header {...options} />
+        )
+        }} />
+      <Stack.Screen name='Searchscreen' component={Searchscreen} options={{headerTransparent:'true' , headerShown:false}} />
+    </Stack.Navigator>
+  )
+}
+
+
 export default TabNavigation;

@@ -17,6 +17,7 @@ import IMAGES from '../../constants/images';
 import COLORS from '../../constants/colors';
 import FONT_SIZES from '../../constants/text';
 import CustomButton from '../../Components/Button/CustomButton';
+import Toast from 'react-native-toast-message';
 
 const Signin = () => {
   const naviagation = useNavigation();
@@ -29,6 +30,16 @@ const Signin = () => {
       .min(6, 'Must be 6+ chars')
       .required('Please enter the password'),
   });
+
+  const showToast = () => {
+    Toast.show({
+      type: 'success',
+      text1: 'Success!',
+      text2: 'Login Succesfull',
+      position: 'top',
+      visibilityTime: 5000, 
+    });
+  };
 
   return (
    <View style={styles.container}> 
@@ -50,6 +61,7 @@ const Signin = () => {
             console.log(values);
             naviagation.navigate('Hometab')
             resetForm();
+            showToast()
           }}>
           {({handleSubmit}) => (
             <View style={styles.form}>

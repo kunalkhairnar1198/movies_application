@@ -10,6 +10,7 @@ import IMAGES from '../../constants/images';
 import  COLORS  from '../../constants/colors';
 import FONT_SIZES from '../../constants/text';
 import CustomButton from '../../Components/Button/CustomButton';
+import Toast from 'react-native-toast-message';
 
 const Singup = () => {
 
@@ -40,6 +41,16 @@ const Singup = () => {
     .required("Please confirm your password")
   });
 
+   const showToast = () => {
+      Toast.show({
+        type: 'success',
+        text1: 'Success!',
+        text2: 'Register Succesfull',
+        position: 'top',
+        visibilityTime: 5000, 
+      });
+    };
+
   console.log('SIGNUP')
   return (
     <ImageBackground source={IMAGES.BG_LOGIN_IMG} style={styles.background} resizeMode='cover'>
@@ -62,6 +73,7 @@ const Singup = () => {
           }
           validationSchema={userSchema}
           onSubmit={(values,{resetForm}) => {
+            showToast()
             console.log("Singup form values",values)
             resetForm()
           }}

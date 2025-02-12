@@ -11,12 +11,15 @@ import {StatusBar} from 'react-native';
 import COLORS from '../../constants/colors';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Iconpro from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Header from '../../Components/Navbar/Header';
 import Favoritescreen from '../../Screens/Favorite/Favoritescreen';
 import Homescreen from '../../Screens/Home/Homescreen';
 import Profilescreen from '../../Screens/Profile/Profilescreen';
 import Searchscreen from '../../Screens/Search/Searchscreen';
+import Detailsscreen from '../../Screens/Detail/Detailsscreen';
+import FONT_SIZES from '../../constants/text';
 
 
 const Tab = createBottomTabNavigator();
@@ -59,6 +62,11 @@ const TabNavigation = ({navigation}) => {
             options={{
               title: 'Favorite',
               animation: 'fade',
+              headerTransparent:true,
+              headerTitleStyle:{
+                color:COLORS.TEXT_PRIMARY,
+                fontSize:30
+              },
               tabBarStyle: {
                 height: 60 + insets.bottom,
                 backgroundColor:COLORS.SECONDARY,
@@ -113,6 +121,29 @@ const HomestackNav =()=>{
         )
         }} />
       <Stack.Screen name='Searchscreen' component={Searchscreen} options={{headerTransparent:'true' , headerShown:false}} />
+      <Stack.Screen name='Detailscreen' 
+      component={Detailsscreen} 
+      options={({navigation}) => ({
+        title:'Details',
+        animation:'fade',
+        headerTransparent:'true',
+        headerTitleStyle:{
+          paddingHorizontal:20,
+          color:COLORS.TEXT_PRIMARY,
+          fontSize:FONT_SIZES.PAGE_TITLE,
+        },
+        headerLeft: () => (
+          <Ionicons 
+          name="chevron-back" 
+          size={35} 
+          color={COLORS.PRIMARY}
+          style={{marginLeft: 15}}
+          onPress={() => navigation.goBack()}
+          />
+        ),
+        
+      })}
+       />
     </Stack.Navigator>
   )
 }

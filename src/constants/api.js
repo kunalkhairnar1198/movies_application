@@ -7,5 +7,8 @@ export const popularMoviesEndpoint = `${BASE_URL}/movie/popular?api_key=${API_KE
 
 //pages apis
 export const trendingMoviesPagesEndpoint= pages =>`${BASE_URL}/trending/movie/day?api_key=${API_KEY}&page=${pages}`
-export const moviesDetailsEndpoint =id => `${BASE_URL}/movie/${id}?api_key=${API_KEY}`
+export const moviesDetailsEndpoint = (id) => `${BASE_URL}/movie/${id}?api_key=${API_KEY}`;
 export const searchMovieEndpoint = params => `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${params}`
+
+
+// https://api.themoviedb.org/3/movie/939243?language=en-US

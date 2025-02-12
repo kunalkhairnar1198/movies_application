@@ -1,10 +1,23 @@
 import React from 'react'
-import { Dimensions, ImageBackground, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { image500 } from '../../../constants/images'
+import { useDispatch } from 'react-redux'
+import { getDetailMovies } from '../../../Store/movie-slice/movieslice'
+import { useNavigation } from '@react-navigation/native'
 
 const {width, height} = Dimensions.get('window')
 
 const MovieItem = ({item}) => {
+  const dispatch = useDispatch()
+  const navigation = useNavigation()
+
+  const switchToDetailPageHandler =(id)=>{
+    console.log(id)
+      dispatch(getDetailMovies(id))
+      navigation.navigate('Detailscreen')
+  }
+
+
   return (
     <View
         style={[
@@ -15,7 +28,7 @@ const MovieItem = ({item}) => {
           source={{uri: image500(item?.poster_path)}}
           style={styles.imageBackground}
           imageStyle={styles.imageStyle}>
-          {/* <TouchableOpacity onPress={() => switchToDetailPageHandler(item)}> */}
+          <TouchableOpacity onPress={() => switchToDetailPageHandler(item.id)}>
             <View style={styles.textContainer}>
               <Text style={styles.movieTitle}>{item?.title}</Text>
               <View style={styles.bottomSection}>
@@ -25,7 +38,7 @@ const MovieItem = ({item}) => {
                 <Text style={styles.movieTiming}>{'2h 30m'}</Text>
               </View>
             </View>
-          {/* </TouchableOpacity> */}
+          </TouchableOpacity>
           {/* <View style={styles.buttonSection}>
             <Button onPress={() => onWatchlistSaveHandler(item)}>
               <Fontisto name="favorite" size={25} color='white' />

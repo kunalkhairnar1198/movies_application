@@ -1,11 +1,25 @@
 import React from 'react';
 import {image500} from '../../constants/images';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import { getDetailMovies } from '../../Store/movie-slice/movieslice';
 
 const Searchlist = ({item}) => {
   const {title, overview, poster_path, vote_average, release_date} = item;
+
+  const dispatch = useDispatch()
+  const navigation = useNavigation()
+
+  const switchToDetailPageHandler =(id)=>{
+    console.log(id)
+      dispatch(getDetailMovies(id))
+      navigation.navigate('Detailscreen')
+  }
   
   return (
+    <TouchableOpacity onPress={() => switchToDetailPageHandler(item.id)}>
+
     <View style={styles.containerList}>
       <Image
         style={styles.imageStyle}
@@ -29,6 +43,8 @@ const Searchlist = ({item}) => {
         </View>
       </View>
     </View>
+    </TouchableOpacity>
+
   );
 };
 const styles = StyleSheet.create({

@@ -1,34 +1,49 @@
 import React from 'react'
-import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
+import { getDetailMovies } from '../../Store/movie-slice/movieslice'
 import  { image500 } from '../../constants/images'
+
 import COLORS from '../../constants/colors'
 
 const {width, height} = Dimensions.get('window')
 
 const CarouselItem = ({item}) => {
-    // console.log(item)
+  const loading = useSelector(state => state.movies.loading)
+  const dispatch = useDispatch()
+  const navigation = useNavigation()
+
+  const switchToDetailPageHandler =(id)=>{
+    console.log(id)
+      dispatch(getDetailMovies(id))
+      navigation.navigate('Detailscreen')
+  }
 
   return (
     <View style={styles.container}>
-    <ImageBackground  source={{uri: image500(item.poster_path)}} style={styles.imageBackground} resizeMode='stretch'>
+    {loading ? <ActivityIndicator size='large' style={{flex:1}}/>
+    :
+    <ImageBackground  source={{uri: image500(item?.poster_path)}} style={styles.imageBackground} resizeMode='stretch'>
          <View style={styles.box}>
-         <TouchableOpacity activeOpacity={0.6} >
+         <TouchableOpacity activeOpacity={0.6} onPress={() => switchToDetailPageHandler(item.id)}>
             <View style={styles.overlay} />
             <View style={styles.textContainer}>
-              <Text style={styles.movieTitle}>{item.title}</Text>
+              <Text style={styles.movieTitle}>{item?.title}</Text>
               <Text style={styles.movieDescription} numberOfLines={3}>
-                {item.overview}
+                {item?.overview}
               </Text>
               <View style={styles.bottomSection}>
                 <Text style={styles.movieRating}>
-                  IMDb: {item.vote_average.toFixed(1)}
+                  IMDb: {item?.vote_average.toFixed(1)}
                 </Text>
                 <Text style={styles.movieTiming}>{"2h 30m"}</Text>
               </View>
             </View>
         </TouchableOpacity>
         </View>
-    </ImageBackground>
+    </ImageBackground>}
     </View>
   )
 }

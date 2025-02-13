@@ -1,9 +1,14 @@
 import React from 'react'
 import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { image500 } from '../../../constants/images'
+
 import { useDispatch } from 'react-redux'
 import { getDetailMovies } from '../../../Store/movie-slice/movieslice'
 import { useNavigation } from '@react-navigation/native'
+
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import Fontisto from 'react-native-vector-icons/Fontisto'
+import Buttoncompo from '../../Button/Buttoncompo'
 
 const {width, height} = Dimensions.get('window')
 
@@ -37,16 +42,17 @@ const MovieItem = ({item}) => {
                 </Text>
                 <Text style={styles.movieTiming}>{'2h 30m'}</Text>
               </View>
+              <View style={styles.buttonSection}>
+                <Buttoncompo>
+                  <Fontisto name="favorite" size={20} color='white' />
+                </Buttoncompo>
+                <Buttoncompo>
+                  <AntDesign name="heart" size={20} color="white" />
+                </Buttoncompo>
+              </View>
             </View>
           </TouchableOpacity>
-          {/* <View style={styles.buttonSection}>
-            <Button onPress={() => onWatchlistSaveHandler(item)}>
-              <Fontisto name="favorite" size={25} color='white' />
-            </Button>
-            <Button onPress={() => onFavoriteSaveHandler(item)}>
-              <AntDesign name="heart" size={25} color="white" />
-            </Button>
-          </View> */}
+          
         </ImageBackground>
       </View>
   )

@@ -7,7 +7,8 @@ const initialState = {
   popularMovies: [],
   watchlistMovies: [],
   favoriteMovies: [],
-  detailsMovie:[]
+  detailsMovie:[],
+  loading:true,
 };
 
 const movieSlice = createSlice({
@@ -16,6 +17,7 @@ const movieSlice = createSlice({
   reducers: {
     setTrendingMovies: (state, action) => {
       state.trendingMovies = action.payload;
+      state.loading = false
     },
     setPupularMovies:(state, action)=>{
       state.popularMovies = action.payload;
@@ -23,7 +25,10 @@ const movieSlice = createSlice({
     setDetailsMovies:(state, action)=>{
       state.detailsMovie = action.payload
       // console.log(state.detailsMovie)
-    }
+    },
+    isLoadingData:(state, action)=>{
+      state.loading = true
+    },
   },
 });
 
@@ -35,6 +40,7 @@ export default movieSlice.reducer;
 
 export const getTrendingMovies = () => {
     return async (dispatch) => {
+      dispatch(moviesActions.isLoadingData())
       try {
         const response = await axios.get(trendingMoviesEndpoint);
         dispatch(moviesActions.setTrendingMovies(response.data.results));

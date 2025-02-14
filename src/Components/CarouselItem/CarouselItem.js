@@ -38,7 +38,6 @@ const CarouselItem = ({item}) => {
                 <Text style={styles.movieRating}>
                   IMDb: {item?.vote_average.toFixed(1)}
                 </Text>
-                <Text style={styles.movieTiming}>{"2h 30m"}</Text>
               </View>
             </View>
         </TouchableOpacity>
@@ -93,10 +92,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#ffd700',
       },
-      movieTiming: {
-        fontSize: 14,
-        color: '#fff',
-      },
+     
 })
 
 export default CarouselItem

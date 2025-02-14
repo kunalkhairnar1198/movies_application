@@ -29,6 +29,29 @@ const movieSlice = createSlice({
     isLoadingData:(state, action)=>{
       state.loading = true
     },
+    setMovieFavoriteList:(state, action)=>{
+      const existingMovieIndex = state.favoriteMovies.findIndex((item) => item.id === action.payload.id);
+
+        if (existingMovieIndex === -1) {
+          state.favoriteMovies = [...state.favoriteMovies, action.payload];
+          console.log("Movie added to favorites:", state.favoriteMovies);
+        } else {
+          state.favoriteMovies.splice(existingMovieIndex, 1);
+          console.log("Movie removed from favorites:", state.favoriteMovies);
+        }
+    },
+    setMovieWatchList:(state, action)=>{
+      const existingMovieIndex = state.watchlistMovies.findIndex((item) => item.id === action.payload.id);
+
+        if (existingMovieIndex === -1) {
+          state.watchlistMovies = [...state.watchlistMovies, action.payload];
+          console.log("Movie added to watchlist:", state.watchlistMovies);
+        } else {
+          state.favoriteMovies.splice(existingMovieIndex, 1);
+          console.log("Movie removed from watchlist:", state.watchlistMovies);
+        }
+    },
+
   },
 });
 

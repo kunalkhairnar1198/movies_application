@@ -1,18 +1,23 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {ScrollView} from 'react-native-gesture-handler';
 import {getLogoImage, image500} from '../../constants/images';
-
-import FONT_SIZES from '../../constants/text';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import COLORS from '../../constants/colors';
 import { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { moviesActions } from '../../Store/movie-slice/movieslice';
+
+import FONT_SIZES from '../../constants/text';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import COLORS from '../../constants/colors';
+import Buttoncompo from '../../Components/Button/Buttoncompo';
 
 
 const Detailsscreen = () => {
   const moviesDetails = useSelector(state => state.movies.detailsMovie);
   const navigation = useNavigation()
+  const dispatch = useDispatch()
   console.log(moviesDetails);
 
 
@@ -27,6 +32,16 @@ const Detailsscreen = () => {
       navigation.getParent()?.setOptions({headershown:true})
     })
   },[navigation])
+
+
+
+  const addFavoriteListHanlder =(moviesDetails)=>{
+        dispatch(moviesActions.setMovieFavoriteList(moviesDetails))
+    }
+  
+    const addWatchlistHandler =(moviesDetails)=>{
+      dispatch(moviesActions.setMovieWatchList(moviesDetails))
+    }
   
 
   return (
@@ -80,8 +95,13 @@ const Detailsscreen = () => {
           ))}
         </View>
 
-        <View style={styles.buttonsection}>
-          
+        <View style={styles.buttonSection}>
+            <Buttoncompo onPress={()=>addWatchlistHandler(moviesDetails)}>
+              <Fontisto name="favorite" size={30} color='white' />
+            </Buttoncompo>
+            <Buttoncompo onPress={()=> addFavoriteListHanlder(moviesDetails)}>
+              <AntDesign name="heart" size={30} color="white" />
+            </Buttoncompo>
         </View>
 
 
@@ -199,6 +219,12 @@ const styles = StyleSheet.create({
     alignItems:'center',
     borderRadius:50,
     backgroundColor:COLORS.PRIMARY,
+  },
+
+  buttonSection: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    gap: 15,
   },
 
   productcontainer:{

@@ -12,7 +12,6 @@ const Searchlist = ({item}) => {
   const navigation = useNavigation()
 
   const switchToDetailPageHandler =(id)=>{
-    console.log(id)
       dispatch(getDetailMovies(id))
       navigation.navigate('Detailscreen')
   }

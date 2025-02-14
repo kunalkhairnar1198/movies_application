@@ -3,7 +3,7 @@ import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View }
 import { image500 } from '../../../constants/images'
 
 import { useDispatch } from 'react-redux'
-import { getDetailMovies } from '../../../Store/movie-slice/movieslice'
+import { getDetailMovies, moviesActions } from '../../../Store/movie-slice/movieslice'
 import { useNavigation } from '@react-navigation/native'
 
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -17,9 +17,17 @@ const MovieItem = ({item}) => {
   const navigation = useNavigation()
 
   const switchToDetailPageHandler =(id)=>{
-    console.log(id)
+    // console.log(id)
       dispatch(getDetailMovies(id))
       navigation.navigate('Detailscreen')
+  }
+
+  const addFavoriteListHanlder =(item)=>{
+      dispatch(moviesActions.setMovieFavoriteList(item))
+  }
+
+  const addWatchlistHandler =(item)=>{
+    dispatch(moviesActions.setMovieWatchList(item))
   }
 
 
@@ -40,13 +48,12 @@ const MovieItem = ({item}) => {
                 <Text style={styles.movieRating}>
                   IMDb: {item?.vote_average?.toFixed(1)}
                 </Text>
-                <Text style={styles.movieTiming}>{'2h 30m'}</Text>
               </View>
               <View style={styles.buttonSection}>
-                <Buttoncompo>
+                <Buttoncompo onPress={()=>addWatchlistHandler(item)}>
                   <Fontisto name="favorite" size={20} color='white' />
                 </Buttoncompo>
-                <Buttoncompo>
+                <Buttoncompo onPress={()=> addFavoriteListHanlder(item)}>
                   <AntDesign name="heart" size={20} color="white" />
                 </Buttoncompo>
               </View>
@@ -98,10 +105,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#ffd700',
       },
-      movieTiming: {
-        fontSize: 14,
-        color: '#fff',
-      }
+      
 })
 
 export default MovieItem

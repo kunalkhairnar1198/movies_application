@@ -23,8 +23,8 @@ const Homescreen = () => {
   const progress = useSharedValue(0);
   
 
-  console.log(TrendingMovies)
-  console.log(PopularMovies)
+  // console.log(TrendingMovies)
+  // console.log(PopularMovies)
 
   useEffect(()=>{
     dispatch(getTrendingMovies())

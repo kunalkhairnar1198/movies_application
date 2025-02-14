@@ -31,7 +31,7 @@ const MoviesList = ({popularMovies}) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        // flex: 1,
         alignItems: 'flex-start',
         paddingBottom: 15,
     },

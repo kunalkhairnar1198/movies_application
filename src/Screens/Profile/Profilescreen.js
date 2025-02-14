@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import COLORS from '../../constants/colors';
@@ -7,12 +8,18 @@ import LogOutIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import DeleteIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import WatchIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import FONT_SIZES from '../../constants/text';
-import { useSelector } from 'react-redux';
+import MoviesList from '../../Components/Movies/MoviesList/MoviesList';
 
 
 const Profilescreen = ({navigation}) => {
   const logedInUser = useSelector(state => state.auth.logedinUser)
-  console.log(logedInUser)
+  const watchlist = useSelector(state => state.movies.watchlistMovies)
+  const [isWatchlist, setIsWatchlist] = useState(false)
+
+
+  const handleWatchlist =()=>{
+    setIsWatchlist(true)
+  }
 
 
   return (
@@ -34,9 +41,13 @@ const Profilescreen = ({navigation}) => {
             </View>  
             <View style={styles.buttons}>
               <LogOutIcon name='logout' style={styles.icons} size={35} onPress={()=>console.log('logout')}/>
-              <DeleteIcon name='delete-outline' style={styles.icons} size={35}/>
-              <WatchIcon name='bookmark-outline' style={styles.icons} size={35}/>
+              <DeleteIcon name='delete-outline' style={styles.icons} size={35} onPress={()=>console.log('delete Account')}/>
+              <WatchIcon name='bookmark-outline' style={styles.icons} size={35} onPress={()=>handleWatchlist()}/>
             </View>  
+            {isWatchlist && <View>
+              <Text style={styles.watchtext}>Watchlist</Text>
+              <MoviesList popularMovies={watchlist} />
+            </View>}
     </View>
   )
 }
@@ -104,6 +115,11 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
 
     elevation: 5,
+  },
+  watchtext:{
+    marginVertical:15,
+    color:COLORS.TEXT_PRIMARY,
+    fontSize:FONT_SIZES.BODY_TEXT + 5
   }
 })
 

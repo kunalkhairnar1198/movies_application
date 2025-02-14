@@ -34,7 +34,7 @@ const COLORS = {
     GRADIENT_SECONDARY: ['#303D4F', '#1C2532'], // Gradient for backgrounds
   
     // Miscellaneous
-    SHADOW: 'rgba(0, 0, 0, 0.2)', // Shadow effect for cards/buttons
+    SHADOW: 'rgba(0, 0, 0, 0.5)', // Shadow effect for cards/buttons
   };
   
   export default COLORS;

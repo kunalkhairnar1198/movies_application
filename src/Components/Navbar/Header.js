@@ -32,7 +32,7 @@ const Header = () => {
 
 const styles = StyleSheet.create({
     container:{
-        paddingVertical:55,
+        paddingVertical:30,
         padding:30,
         flexDirection:'row',
         justifyContent:'space-between',

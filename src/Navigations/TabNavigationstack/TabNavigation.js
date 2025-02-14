@@ -1,11 +1,7 @@
-import {
-  SafeAreaProvider,
-  SafeAreaView,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import {useSafeAreaInsets,} from 'react-native-safe-area-context';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import {StatusBar} from 'react-native';
+import {StatusBar, StyleSheet} from 'react-native';
 
 
 import COLORS from '../../constants/colors';
@@ -33,6 +29,7 @@ const TabNavigation = ({navigation}) => {
     tabBarHideOnKeyboard:true,
     tabBarActiveTintColor: COLORS.PRIMARY,
     tabBarInactiveTintColor: '#0f9e9e',
+    tabBarStyle: {...styles.tabbarContainer},
   };
 
   return (
@@ -85,9 +82,9 @@ const TabNavigation = ({navigation}) => {
             name="Profile"
             component={Profilescreen}
             options={{
-              title: 'Profile',
               animation: 'fade',
-              // headerShown: false,
+              headerShown: false,
+              headerTransparent:true,
               tabBarStyle: {
                 height: 60 + insets.bottom,
                 backgroundColor:COLORS.SECONDARY,
@@ -119,7 +116,9 @@ const HomestackNav =()=>{
           <Header {...options} />
         )
         }} />
+
       <Stack.Screen name='Searchscreen' component={Searchscreen} options={{headerTransparent:'true' , headerShown:false}} />
+      
       <Stack.Screen name='Detailscreen' 
       component={Detailsscreen} 
       options={({navigation}) => ({
@@ -146,6 +145,19 @@ const HomestackNav =()=>{
     </Stack.Navigator>
   )
 }
+
+const styles = StyleSheet.create({
+ tabbarContainer:{
+  position:'absolute',
+  bottom: 0,
+  zIndex: 1000,
+  flexDirection: "row",
+  justifyContent: "space-around",
+  alignItems: "center",
+  width: "100%",
+  height: 80,
+ }
+})
 
 
 export default TabNavigation;

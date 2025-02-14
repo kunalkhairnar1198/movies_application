@@ -2,9 +2,11 @@ import React from 'react';
 import { View,  StyleSheet, Text, ImageBackground, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { authActions } from '../../Store/auth-slice/authslice';
 
+import LinearGradient from 'react-native-linear-gradient';
 import TextInput from '../../Components/Input/Textinput';
 import IMAGES from '../../constants/images';
 import  COLORS  from '../../constants/colors';
@@ -15,6 +17,11 @@ import Toast from 'react-native-toast-message';
 const Singup = () => {
 
   const navigation =useNavigation()
+  const dispatch = useDispatch()
+
+  const registerUsers = useSelector(state => state.auth.users)
+  const messages = useSelector(state => state.auth.message)
+  console.log(registerUsers)
 
 
   let userSchema = Yup.object({
@@ -22,7 +29,6 @@ const Singup = () => {
     .min(3, "Name must be at least 3 characters")
     .max(50, "Name cannot exceed 50 characters")
     .required("Please enter your name"),
-
 
     email:Yup.string()
     .email("Invalid email address")
@@ -41,17 +47,41 @@ const Singup = () => {
     .required("Please confirm your password")
   });
 
-   const showToast = () => {
-      Toast.show({
-        type: 'success',
-        text1: 'Success!',
-        text2: 'Register Succesfull',
-        position: 'top',
-        visibilityTime: 5000, 
-      });
-    };
 
-  console.log('SIGNUP')
+  const submitHandle =(values, resetForm)=>{
+    // console.log(values)
+   dispatch(authActions.setRegisterUser(values))
+   
+    if(messages){
+      if (messages === "Registration successful!") {
+        
+        Toast.show({
+          type: "success",
+          text1: "Success",
+          text2: messages,
+          position: 'top',
+          visibilityTime: 5000, 
+        })
+        // resetForm();
+
+      }else if(messages === "User already exists!"){
+
+        Toast.show({
+          type:'error',
+          text1:'Error',
+          text2:messages,
+          position: 'top',
+          visibilityTime: 5000, 
+        })
+        resetForm()
+        
+      }
+      
+    }
+        
+      
+  }  
+
   return (
     <ImageBackground source={IMAGES.BG_LOGIN_IMG} style={styles.background} resizeMode='cover'>
     <LinearGradient
@@ -69,13 +99,13 @@ const Singup = () => {
             number: "",
             password: "",
             confirmPassword:"", 
+            id: Math.random().toString(),
             }
           }
           validationSchema={userSchema}
           onSubmit={(values,{resetForm}) => {
-            showToast()
+            submitHandle(values,resetForm)
             console.log("Singup form values",values)
-            resetForm()
           }}
         >
           {({ handleSubmit }) => (

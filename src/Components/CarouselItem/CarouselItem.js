@@ -23,8 +23,8 @@ const CarouselItem = ({item}) => {
 
   return (
     <View style={styles.container}>
-    {loading ? <ActivityIndicator size='large' style={{flex:1}}/>
-    :
+    {/* {!loading ? <ActivityIndicator size='large' style={{flex:1}}/>
+    : */}
     <ImageBackground  source={{uri: image500(item?.poster_path)}} style={styles.imageBackground} resizeMode='stretch'>
          <View style={styles.box}>
          <TouchableOpacity activeOpacity={0.6} onPress={() => switchToDetailPageHandler(item.id)}>
@@ -43,7 +43,7 @@ const CarouselItem = ({item}) => {
             </View>
         </TouchableOpacity>
         </View>
-    </ImageBackground>}
+    </ImageBackground>
     </View>
   )
 }

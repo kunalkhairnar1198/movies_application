@@ -28,6 +28,7 @@ const Stack = createStackNavigator();
 const TabNavigation = ({navigation}) => {
   const insets = useSafeAreaInsets();
 
+  
   const screenOptions = {
     tabBarHideOnKeyboard:true,
     tabBarActiveTintColor: COLORS.PRIMARY,
@@ -35,9 +36,8 @@ const TabNavigation = ({navigation}) => {
   };
 
   return (
-    <SafeAreaProvider>
-      <SafeAreaView style={{flex: 1}}>
-        <StatusBar animated={true} backgroundColor={COLORS.PRIMARY} />
+    <>
+        <StatusBar animated={true} barStyle="light-content" backgroundColor={COLORS.SECONDARY} />
 
         <Tab.Navigator  screenOptions={screenOptions}>
           <Tab.Screen
@@ -102,8 +102,7 @@ const TabNavigation = ({navigation}) => {
             }}
           />
         </Tab.Navigator>
-      </SafeAreaView>
-    </SafeAreaProvider>
+        </>
   );
 };
 

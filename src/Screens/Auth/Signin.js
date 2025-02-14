@@ -10,17 +10,26 @@ import {
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import {useNavigation} from '@react-navigation/native';
-import LinearGradient from 'react-native-linear-gradient';
 
+import LinearGradient from 'react-native-linear-gradient';
 import TextInput from '../../Components/Input/Textinput';
 import IMAGES from '../../constants/images';
 import COLORS from '../../constants/colors';
 import FONT_SIZES from '../../constants/text';
 import CustomButton from '../../Components/Button/CustomButton';
 import Toast from 'react-native-toast-message';
+import { useDispatch, useSelector } from 'react-redux';
+import { authActions } from '../../Store/auth-slice/authslice';
 
 const Signin = () => {
   const naviagation = useNavigation();
+  const dispatch = useDispatch()
+  const logedInUser = useSelector(state => state.auth.logedinUser)
+  const signUpUser = useSelector(state => state.auth.users)
+  const messages = useSelector(state => state.auth.message)
+  
+  console.log(signUpUser)
+  console.log(logedInUser)
 
   let userSchema = Yup.object({
     email: Yup.string()
@@ -31,15 +40,39 @@ const Signin = () => {
       .required('Please enter the password'),
   });
 
-  const showToast = () => {
-    Toast.show({
-      type: 'success',
-      text1: 'Success!',
-      text2: 'Login Succesfull',
-      position: 'top',
-      visibilityTime: 5000, 
-    });
-  };
+  const loginHandle=(values, resetForm)=>{
+    console.log(values)
+    
+    dispatch(authActions.setLoginUser(values))
+
+     if(messages){
+          if (messages === "LogedIn succesfull") {
+            
+            Toast.show({
+              type: "success",
+              text1: "Success",
+              text2: messages,
+              position: 'top',
+              visibilityTime: 5000, 
+            })
+            naviagation.navigate('Hometab')
+            resetForm();
+    
+          }else if(messages === "Invalid creadential !"){
+    
+            Toast.show({
+              type:'error',
+              text1:'Error',
+              text2:messages,
+              position: 'top',
+              visibilityTime: 5000, 
+            })
+            resetForm()
+            
+          }
+        }
+
+  }
 
   return (
    <View style={styles.container}> 
@@ -58,10 +91,10 @@ const Signin = () => {
           initialValues={{email: '', password: ''}}
           validationSchema={userSchema}
           onSubmit={(values, {resetForm}) => {
-            console.log(values);
-            naviagation.navigate('Hometab')
-            resetForm();
-            showToast()
+            loginHandle(values, resetForm)
+            // console.log(values);
+            // resetForm();
+            // showToast()
           }}>
           {({handleSubmit}) => (
             <View style={styles.form}>

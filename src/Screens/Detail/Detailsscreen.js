@@ -19,7 +19,7 @@ const Detailsscreen = () => {
   useEffect(()=>{
     const header = navigation.getParent()?.setOptions({headershown:false})
     if(moviesDetails){
-      navigation.setOptions({title:`${moviesDetails.title}`})
+      navigation.setOptions({title:`${moviesDetails?.original_title}`})
     }else{
       <Text>Loading...</Text>
     }

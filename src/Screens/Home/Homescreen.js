@@ -9,7 +9,7 @@ import CarouselItem from '../../Components/CarouselItem/CarouselItem'
 import MoviesList from '../../Components/Movies/MoviesList/MoviesList'
 import Carousel from 'react-native-reanimated-carousel'
 import COLORS from '../../constants/colors'
-
+import FONT_SIZES from '../../constants/text'
 
 
 const width = Dimensions.get('window').width
@@ -69,14 +69,15 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'space-between',
         backgroundColor:COLORS.BACKGROUND,
-        padding:10
+        // padding:10
     },
     popularMovies:{
       marginVertical:30
     },
     texttitle:{
-      fontWeight:'semibold',
-      fontSize:25,
+      paddingHorizontal:10,
+      fontWeight:'bold',
+      fontSize:FONT_SIZES.SUBTITLE,
       color:COLORS.TEXT_PRIMARY,
     }
    

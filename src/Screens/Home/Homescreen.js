@@ -40,7 +40,7 @@ const Homescreen = () => {
               width={width}
               height={500}
               loop
-              // autoPlay
+              autoPlay
               autoPlayInterval={2000}
               mode="parallax"
               modeConfig={{

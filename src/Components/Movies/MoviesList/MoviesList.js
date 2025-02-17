@@ -11,7 +11,7 @@ const MoviesList = ({item}) => {
     <View style={styles.container}>
       <FlatList
         data={item}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={(item, index) => (item.id ? item.id.toString() : index.toString())}
         renderItem={({item}) => <MovieItem item={item} />}
         horizontal
         pagingEnabled

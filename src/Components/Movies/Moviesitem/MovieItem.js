@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {image500} from '../../../constants/images';
 
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   getDetailMovies,
   moviesActions,
@@ -19,11 +19,13 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Buttoncompo from '../../Button/Buttoncompo';
+import Toast from 'react-native-toast-message';
 
 const {width, height} = Dimensions.get('window');
 
 const MovieItem = ({item}) => {
   const dispatch = useDispatch();
+  const toastMessage = useSelector(state => state.movies.toastMessage);
   const navigation = useNavigation();
   const route = useRoute();
 
@@ -31,7 +33,7 @@ const MovieItem = ({item}) => {
     dispatch(getDetailMovies(id));
 
     if (route.name === 'Profile' || route.name === 'Favorite') {
-      console.log(route)
+      console.log(route);
       navigation.navigate('Homestack', {screen: 'Detailscreen'});
     } else {
       navigation.navigate('Detailscreen');
@@ -40,10 +42,37 @@ const MovieItem = ({item}) => {
   };
 
   const addFavoriteListHanlder = item => {
+    if (toastMessage === 'Succesfully added Favorite') {
+      Toast.show({
+        type: 'success',
+        text1: toastMessage,
+        text2: `Added Movie Favorite`,
+      });
+    } else if (toastMessage === 'Succesfully Removed Movie Favorite list') {
+      Toast.show({
+        type: 'error',
+        text1: toastMessage,
+        text2: `Removed Movie Favorite`,
+      });
+    }
+
     dispatch(moviesActions.setMovieFavoriteList(item));
   };
 
   const addWatchlistHandler = item => {
+    if (toastMessage === 'Movie added to watchlist') {
+      Toast.show({
+        type: 'success',
+        text1: toastMessage,
+        text2: `Added Movie watchlist`,
+      });
+    } else if (toastMessage === 'Movie removed from watchlist') {
+      Toast.show({
+        type: 'error',
+        text1: toastMessage,
+        text2: `Removed Movie from watchlist`,
+      });
+    }
     dispatch(moviesActions.setMovieWatchList(item));
   };
 

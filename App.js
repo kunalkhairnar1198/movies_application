@@ -2,7 +2,7 @@ import React from 'react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import Appnavigationstack from './src/Navigations/Appnavigationstack';
-import Toast from 'react-native-toast-message';
+import CustomToast from './src/Components/Toast/CustomeToast';
 
 const App = () => {
   return (
@@ -11,7 +11,7 @@ const App = () => {
         <NavigationContainer>
           <Appnavigationstack />
         </NavigationContainer>
-        <Toast />
+        <CustomToast />
       </GestureHandlerRootView>
     </>
   );

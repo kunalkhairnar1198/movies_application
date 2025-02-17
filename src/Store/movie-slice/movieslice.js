@@ -14,11 +14,12 @@ const initialState = {
   popularMovies: [],
   top_ratedMovies: [],
   upComingMovies: [],
-  castCredit:[],
+  castCredit: [],
   watchlistMovies: [],
   favoriteMovies: [],
   detailsMovie: [],
   loading: true,
+  toastMessage: null,
 };
 
 const movieSlice = createSlice({
@@ -42,7 +43,7 @@ const movieSlice = createSlice({
       state.detailsMovie = action.payload;
       // console.log(state.detailsMovie)
     },
-    setMoviesCast:(state, action)=>{
+    setMoviesCast: (state, action) => {
       state.castCredit = action.payload;
     },
     isLoadingData: (state, action) => {
@@ -55,9 +56,11 @@ const movieSlice = createSlice({
 
       if (existingMovieIndex === -1) {
         state.favoriteMovies = [...state.favoriteMovies, action.payload];
+        state.toastMessage = 'Succesfully added Favorite';
         console.log('Movie added to favorites:', state.favoriteMovies);
       } else {
         state.favoriteMovies.splice(existingMovieIndex, 1);
+        state.toastMessage = 'Succesfully Removed Movie Favorite list';
         console.log('Movie removed from favorites:', state.favoriteMovies);
       }
     },
@@ -68,9 +71,11 @@ const movieSlice = createSlice({
 
       if (existingMovieIndex === -1) {
         state.watchlistMovies = [...state.watchlistMovies, action.payload];
+        state.toastMessage = 'Movie added to watchlist';
         console.log('Movie added to watchlist:', state.watchlistMovies);
       } else {
         state.watchlistMovies.splice(existingMovieIndex, 1);
+        state.toastMessage = 'Movie removed from watchlist';
         console.log('Movie removed from watchlist:', state.watchlistMovies);
       }
     },
@@ -111,10 +116,10 @@ export const getDetailMovies = id => {
     try {
       const response = await axios.get(moviesDetailsEndpoint(id));
       // console.log(response.data)
-      const cast_res = await axios.get(movieCastEndpoint(id))
+      const cast_res = await axios.get(movieCastEndpoint(id));
 
-      console.log(cast_res.data)
-      dispatch(moviesActions.setMoviesCast(cast_res.data))
+      console.log(cast_res.data);
+      dispatch(moviesActions.setMoviesCast(cast_res.data));
       dispatch(moviesActions.setDetailsMovies(response.data));
     } catch (error) {
       console.log('Error Fetching movies Details', error);

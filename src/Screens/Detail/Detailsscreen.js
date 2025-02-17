@@ -12,10 +12,12 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../../constants/colors';
 import Buttoncompo from '../../Components/Button/Buttoncompo';
+import Toast from 'react-native-toast-message';
 
 const Detailsscreen = () => {
   const moviesDetails = useSelector(state => state.movies.detailsMovie);
   const moviesCast = useSelector(state => state.movies.castCredit);
+  const toastMessage = useSelector(state => state.movies.toastMessage)
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -29,13 +31,40 @@ const Detailsscreen = () => {
     };
   }, [navigation, moviesDetails]);
 
-  const addFavoriteListHandler = () => {
-    dispatch(moviesActions.setMovieFavoriteList(moviesDetails));
-  };
-
-  const addWatchlistHandler = () => {
-    dispatch(moviesActions.setMovieWatchList(moviesDetails));
-  };
+  const addFavoriteListHanlder = item => {
+      if (toastMessage === 'Succesfully added Favorite') {
+        Toast.show({
+          type: 'success',
+          text1: toastMessage,
+          text2: `Added Movie Favorite`,
+        });
+      } else if (toastMessage === 'Succesfully Removed Movie Favorite list') {
+        Toast.show({
+          type: 'error',
+          text1: toastMessage,
+          text2: `Removed Movie Favorite`,
+        });
+      }
+  
+      dispatch(moviesActions.setMovieFavoriteList(item));
+    };
+  
+    const addWatchlistHandler = item => {
+      if (toastMessage === 'Movie added to watchlist') {
+        Toast.show({
+          type: 'success',
+          text1: toastMessage,
+          text2: `Added Movie watchlist`,
+        });
+      } else if (toastMessage === 'Movie removed from watchlist') {
+        Toast.show({
+          type: 'error',
+          text1: toastMessage,
+          text2: `Removed Movie from watchlist`,
+        });
+      }
+      dispatch(moviesActions.setMovieWatchList(item));
+    };
 
   return (
     <ScrollView style={styles.container}>
@@ -89,7 +118,7 @@ const Detailsscreen = () => {
           <Buttoncompo onPress={addWatchlistHandler}>
             <Fontisto name="favorite" size={30} color="white" />
           </Buttoncompo>
-          <Buttoncompo onPress={addFavoriteListHandler}>
+          <Buttoncompo onPress={addFavoriteListHanlder}>
             <AntDesign name="heart" size={30} color="white" />
           </Buttoncompo>
         </View>

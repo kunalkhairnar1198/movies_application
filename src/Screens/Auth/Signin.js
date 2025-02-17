@@ -46,7 +46,7 @@ const Signin = () => {
     dispatch(authActions.setLoginUser(values));
 
     if (messages) {
-      if (messages === "Logged in successfully!") {
+      if (messages === 'Logged in successfully!') {
         Toast.show({
           type: 'success',
           text1: 'Success',
@@ -54,9 +54,9 @@ const Signin = () => {
           position: 'top',
           visibilityTime: 5000,
         });
-        naviagation.navigate('Hometab');
+        // naviagation.navigate('Hometab');
         resetForm();
-      } else if(messages === "Invalid password!") {
+      } else if (messages === 'Invalid password!') {
         Toast.show({
           type: 'error',
           text1: 'Error',
@@ -68,8 +68,6 @@ const Signin = () => {
       }
     }
   };
-
-   
 
   return (
     <View style={styles.container}>

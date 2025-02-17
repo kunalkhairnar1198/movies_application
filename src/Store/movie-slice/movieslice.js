@@ -14,10 +14,10 @@ const initialState = {
   popularMovies: [],
   top_ratedMovies: [],
   upComingMovies: [],
-  castCredit: [],
+  castCredit: null,
   watchlistMovies: [],
   favoriteMovies: [],
-  detailsMovie: [],
+  detailsMovie: null,
   loading: true,
   toastMessage: null,
 };
@@ -42,6 +42,10 @@ const movieSlice = createSlice({
     setDetailsMovies: (state, action) => {
       state.detailsMovie = action.payload;
       // console.log(state.detailsMovie)
+    },
+    setClearMovieDetails:(state, action)=>{
+      state.castCredit = null;
+      state.detailsMovie = null;
     },
     setMoviesCast: (state, action) => {
       state.castCredit = action.payload;

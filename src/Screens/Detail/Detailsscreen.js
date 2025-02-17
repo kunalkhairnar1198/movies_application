@@ -4,7 +4,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {getLogoImage, image500} from '../../constants/images';
 import {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {moviesActions} from '../../Store/movie-slice/movieslice';
+import {getDetailMovies, moviesActions} from '../../Store/movie-slice/movieslice';
 
 import FONT_SIZES from '../../constants/text';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -14,14 +14,22 @@ import COLORS from '../../constants/colors';
 import Buttoncompo from '../../Components/Button/Buttoncompo';
 import Toast from 'react-native-toast-message';
 
-const Detailsscreen = () => {
+const Detailsscreen = ({route}) => {
   const moviesDetails = useSelector(state => state.movies.detailsMovie);
   const moviesCast = useSelector(state => state.movies.castCredit);
   const toastMessage = useSelector(state => state.movies.toastMessage)
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+  const {id} = route.params
+
+
+  useEffect(()=>{
+    dispatch(getDetailMovies(id))
+  },[id])
+
   useEffect(() => {
+
     const header = navigation.getParent()?.setOptions({headerShown: false});
     if (moviesDetails) {
       navigation.setOptions({title: `${moviesDetails?.original_title}`});
@@ -30,6 +38,8 @@ const Detailsscreen = () => {
       navigation.getParent()?.setOptions({headerShown: false});
     };
   }, [navigation, moviesDetails]);
+
+
 
   const addFavoriteListHanlder = item => {
       if (toastMessage === 'Succesfully added Favorite') {

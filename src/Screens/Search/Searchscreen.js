@@ -32,7 +32,7 @@ const Searchscreen = () => {
       const Response = await axios(
         `https://api.themoviedb.org/3/search/movie?api_key=ee685f440549ded82e3e87a8eed2f321&query=${searchData}`,
       );
-      // console.log('-----', Response.data);
+      console.log('-----', Response.data);
       setIsResult(Response.data.results);
     }
   };

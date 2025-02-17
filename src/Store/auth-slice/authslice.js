@@ -55,6 +55,7 @@ const authSlice = createSlice({
         obj => obj.id === action.payload.id,
       );
       state.users.splice(indexToRemove, 1);
+      console.log(state.users)
     },
   },
 });

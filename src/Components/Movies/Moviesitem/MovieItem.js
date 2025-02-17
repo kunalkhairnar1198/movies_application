@@ -8,12 +8,8 @@ import {
   View,
 } from 'react-native';
 import {image500} from '../../../constants/images';
-
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  getDetailMovies,
-  moviesActions,
-} from '../../../Store/movie-slice/movieslice';
+import {moviesActions} from '../../../Store/movie-slice/movieslice';
 import {useNavigation, useRoute} from '@react-navigation/native';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -30,13 +26,17 @@ const MovieItem = ({item}) => {
   const route = useRoute();
 
   const switchToDetailPageHandler = id => {
-    dispatch(getDetailMovies(id));
+   
+    dispatch(moviesActions.setClearMovieDetails())
 
     if (route.name === 'Profile' || route.name === 'Favorite') {
-      console.log(route);
-      navigation.navigate('Homestack', {screen: 'Detailscreen'});
+      
+      navigation.navigate('Homestack', {
+        screen: 'Detailscreen',
+        params: {id: id},
+      });
     } else {
-      navigation.navigate('Detailscreen');
+      navigation.navigate('Detailscreen', {id: id});
     }
     // console.log('detailscreen',navigation)
   };

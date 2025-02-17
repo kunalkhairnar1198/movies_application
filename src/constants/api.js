@@ -8,6 +8,9 @@ export const upcomingMoviesEndpoint = `${BASE_URL}/movie/upcoming?api_key=${API_
 // /movie/upcoming
 // https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1
 
+export const movieCastEndpoint = (movieId) => 
+  `${BASE_URL}/movie/${movieId}/credits?api_key=${API_KEY}`;
+
 //pages apis
 export const trendingMoviesPagesEndpoint = pages =>
   `${BASE_URL}/trending/movie/day?api_key=${API_KEY}&page=${pages}`;

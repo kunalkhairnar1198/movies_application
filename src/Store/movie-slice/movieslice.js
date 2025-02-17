@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
 import {
+  movieCastEndpoint,
   moviesDetailsEndpoint,
   popularMoviesEndpoint,
   topRatedMoviesEndpoint,
@@ -13,6 +14,7 @@ const initialState = {
   popularMovies: [],
   top_ratedMovies: [],
   upComingMovies: [],
+  castCredit:[],
   watchlistMovies: [],
   favoriteMovies: [],
   detailsMovie: [],
@@ -39,6 +41,9 @@ const movieSlice = createSlice({
     setDetailsMovies: (state, action) => {
       state.detailsMovie = action.payload;
       // console.log(state.detailsMovie)
+    },
+    setMoviesCast:(state, action)=>{
+      state.castCredit = action.payload;
     },
     isLoadingData: (state, action) => {
       state.loading = true;
@@ -101,12 +106,15 @@ export const getPopularMovies = () => {
 
 export const getDetailMovies = id => {
   return async dispatch => {
-    trending;
     console.log(id);
 
     try {
       const response = await axios.get(moviesDetailsEndpoint(id));
       // console.log(response.data)
+      const cast_res = await axios.get(movieCastEndpoint(id))
+
+      console.log(cast_res.data)
+      dispatch(moviesActions.setMoviesCast(cast_res.data))
       dispatch(moviesActions.setDetailsMovies(response.data));
     } catch (error) {
       console.log('Error Fetching movies Details', error);

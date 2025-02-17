@@ -2,9 +2,9 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {ScrollView} from 'react-native-gesture-handler';
 import {getLogoImage, image500} from '../../constants/images';
-import { useEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { moviesActions } from '../../Store/movie-slice/movieslice';
+import {useEffect} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {moviesActions} from '../../Store/movie-slice/movieslice';
 
 import FONT_SIZES from '../../constants/text';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -13,39 +13,32 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../../constants/colors';
 import Buttoncompo from '../../Components/Button/Buttoncompo';
 
-
 const Detailsscreen = () => {
   const moviesDetails = useSelector(state => state.movies.detailsMovie);
-  const navigation = useNavigation()
-  const dispatch = useDispatch()
-  console.log(moviesDetails);
+  const moviesCast = useSelector(state => state.movies.castCredit);
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
-
-  useEffect(()=>{
-    const header = navigation.getParent()?.setOptions({headershown:false})
-    if(moviesDetails){
-      navigation.setOptions({title:`${moviesDetails?.original_title}`})
-    }else{
-      <Text>Loading...</Text>
+  useEffect(() => {
+    const header = navigation.getParent()?.setOptions({headerShown: false});
+    if (moviesDetails) {
+      navigation.setOptions({title: `${moviesDetails?.original_title}`});
     }
-    return(()=>{
-      navigation.getParent()?.setOptions({headershown:true})
-    })
-  },[navigation])
+    return () => {
+      navigation.getParent()?.setOptions({headerShown: false});
+    };
+  }, [navigation, moviesDetails]);
 
+  const addFavoriteListHandler = () => {
+    dispatch(moviesActions.setMovieFavoriteList(moviesDetails));
+  };
 
-
-  const addFavoriteListHanlder =(moviesDetails)=>{
-        dispatch(moviesActions.setMovieFavoriteList(moviesDetails))
-    }
-  
-    const addWatchlistHandler =(moviesDetails)=>{
-      dispatch(moviesActions.setMovieWatchList(moviesDetails))
-    }
-  
+  const addWatchlistHandler = () => {
+    dispatch(moviesActions.setMovieWatchList(moviesDetails));
+  };
 
   return (
-    <ScrollView style={styles.container} edges={['top']}>
+    <ScrollView style={styles.container}>
       <Image
         style={styles.image}
         source={{uri: image500(moviesDetails?.backdrop_path)}}
@@ -63,69 +56,97 @@ const Detailsscreen = () => {
           </Text>
         </View>
 
-        <View>
-          <Text style={styles.description}>{moviesDetails?.overview}</Text>
-        </View>
+        <Text style={styles.description}>{moviesDetails?.overview}</Text>
 
         <View style={styles.generessection}>
-          <Text style={{color: 'white'}}>Geners</Text>
+          <Text style={{color: 'white'}}>Genres</Text>
           {moviesDetails?.genres?.map(item => (
-            <View key={item?.id}>
-              <Text style={styles.list}>{item?.name}</Text>
-            </View>
+            <Text key={item?.id} style={styles.list}>
+              {item?.name}
+            </Text>
           ))}
         </View>
 
         <View style={styles.countriessection}>
           <Text style={styles.countrititle}>Countries</Text>
           {moviesDetails?.production_countries?.map((item, index) => (
-            <View key={index} style={styles.countrieslist}>
-              <Text style={styles.list}>{item?.name}</Text>
-            </View>
+            <Text key={index} style={styles.list}>
+              {item?.name}
+            </Text>
           ))}
         </View>
-
 
         <View style={styles.languagesection}>
           <Text style={styles.langtitle}>Language</Text>
           {moviesDetails?.spoken_languages?.map((item, index) => (
-            <View key={index} style={styles.langlist}>
-              <Text style={{color: 'black'}}>{item?.name}</Text>
-            </View>
+            <Text key={index} style={styles.list}>
+              {item?.name}
+            </Text>
           ))}
         </View>
 
         <View style={styles.buttonSection}>
-            <Buttoncompo onPress={()=>addWatchlistHandler(moviesDetails)}>
-              <Fontisto name="favorite" size={30} color='white' />
-            </Buttoncompo>
-            <Buttoncompo onPress={()=> addFavoriteListHanlder(moviesDetails)}>
-              <AntDesign name="heart" size={30} color="white" />
-            </Buttoncompo>
+          <Buttoncompo onPress={addWatchlistHandler}>
+            <Fontisto name="favorite" size={30} color="white" />
+          </Buttoncompo>
+          <Buttoncompo onPress={addFavoriteListHandler}>
+            <AntDesign name="heart" size={30} color="white" />
+          </Buttoncompo>
         </View>
 
-
         <View style={styles.productcontainer}>
-        <Text style={styles.protitle}>Production</Text>
-        <ScrollView
-          horizontal
-          scrollEnabled
-          showsHorizontalScrollIndicator={false}
-          style={styles.productcompsection}>
-          {moviesDetails?.production_companies?.map((item, index) => (
-            <View key={index} style={styles.prodcircle}>
-              {item.logo_path ? (
-                <Image
-                  source={{uri: getLogoImage(item?.logo_path)}}
-                  style={styles.imagescroll}
-                />
-              ) : (
-                ''
-              )}
-              <Text style={styles.prodname}>{item?.name}</Text>
-            </View>
-          ))}
-        </ScrollView>
+          <Text style={styles.protitle}>Production</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {moviesDetails?.production_companies?.map((item, index) => (
+              <View key={index} style={styles.prodcircle}>
+                {item.logo_path && (
+                  <Image
+                    source={{uri: getLogoImage(item?.logo_path)}}
+                    style={styles.imagescroll}
+                  />
+                )}
+                <Text style={styles.prodname}>{item?.name}</Text>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+
+        <View style={styles.castcontainer}>
+          <Text style={styles.casttitle}>Cast</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {moviesCast?.cast?.map((item, index) => (
+              <View key={index}>
+                {item?.profile_path && (
+                  <>
+                    <Image
+                      source={{uri: image500(item?.profile_path)}}
+                      style={styles.imagecastscroll}
+                    />
+                    <Text style={styles.castname}>{item.name}</Text>
+                  </>
+                )}
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+
+        <View style={styles.castcontainer}>
+          <Text style={styles.casttitle}>Crew</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {moviesCast?.crew?.map((item, index) => (
+              <View key={index}>
+                {item?.profile_path && (
+                  <>
+                    <Image
+                      source={{uri: image500(item?.profile_path)}}
+                      style={styles.imagecastscroll}
+                    />
+                    <Text style={styles.castname}>{item.name}</Text>
+                  </>
+                )}
+              </View>
+            ))}
+          </ScrollView>
         </View>
       </View>
     </ScrollView>
@@ -135,25 +156,20 @@ const Detailsscreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
     backgroundColor: COLORS.BACKGROUND,
   },
   image: {
-    // position:'absolute',
-    // flex:1,
     width: '100%',
     height: 300,
   },
   detailSection: {
     backgroundColor: COLORS.BACKGROUND,
-    flex: 1,
     padding: 20,
   },
   title: {
     color: COLORS.TEXT_PRIMARY,
     fontSize: FONT_SIZES.SUBTITLE + 11,
-    fontWeight: 'semibold',
-    marginBottom: 5,
+    fontWeight: '600',
   },
   dateratingsection: {
     flexDirection: 'row',
@@ -167,95 +183,79 @@ const styles = StyleSheet.create({
   },
   description: {
     marginVertical: 10,
+    textAlign: 'justify',
     color: COLORS.TEXT_MUTED,
     fontSize: FONT_SIZES.BODY_TEXT,
-    justifyContent: 'center',
-    textAlign: 'justify',
   },
   generessection: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
     backgroundColor: '#7b616132',
     borderRadius: 30,
     padding: 5,
   },
   list: {
     color: COLORS.TEXT_MUTED,
+    marginHorizontal: 5,
   },
-
-  countriessection:{
-    marginTop:10,
-    flexDirection:'row',
+  countriessection: {
+    marginTop: 10,
+    flexDirection: 'row',
     borderRadius: 30,
     padding: 5,
-    gap:5,
   },
-  countrititle:{
-    fontSize:FONT_SIZES.BODY_TEXT + 2,
-    color:COLORS.TEXT_PRIMARY
+  countrititle: {
+    fontSize: FONT_SIZES.BODY_TEXT + 2,
+    color: COLORS.TEXT_PRIMARY,
   },
-  countrieslist:{
-    padding:5,
-    justifyContent:'center',
-    alignItems:'center',
-    borderRadius:50,
-    backgroundColor:'#7b616132',
-  },
-
-  languagesection:{
-    marginTop:10,
-    flexDirection:'row',
+  languagesection: {
+    marginTop: 10,
+    flexDirection: 'row',
     borderRadius: 30,
     padding: 5,
-    gap:5,
   },
-  langtitle:{
-    fontSize:FONT_SIZES.BODY_TEXT + 2,
-    color:COLORS.TEXT_PRIMARY
+  langtitle: {
+    fontSize: FONT_SIZES.BODY_TEXT + 2,
+    color: COLORS.TEXT_PRIMARY,
   },
-  langlist:{
-    padding:5,
-    justifyContent:'center',
-    alignItems:'center',
-    borderRadius:50,
-    backgroundColor:COLORS.PRIMARY,
-  },
-
   buttonSection: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     gap: 15,
   },
-
-  productcontainer:{
-    marginVertical:20
+  productcontainer: {
+    marginVertical: 20,
   },
-  protitle:{
-    fontSize:FONT_SIZES.BODY_TEXT + 2,
-    color:COLORS.TEXT_PRIMARY
-  },
-  productcompsection: {
-    flexDirection: 'row',
+  protitle: {
+    fontSize: FONT_SIZES.BODY_TEXT + 2,
+    color: COLORS.TEXT_PRIMARY,
   },
   prodcircle: {
-    marginVertical: 20,
-    alignItems: 'center',
     marginRight: 10,
-    backgroundColor:COLORS.PRIMARY,
+    backgroundColor: COLORS.PRIMARY,
     padding: 10,
     borderRadius: 10,
   },
-  prodname:{
-    fontWeight:'semibold',
-    fontSize:FONT_SIZES.BUTTON_TEXT,
-    color:'black'
+  prodname: {
+    fontSize: FONT_SIZES.BUTTON_TEXT,
+    color: 'black',
   },
-  imagescroll: {
+  castcontainer: {
+    marginVertical: 10,
+  },
+  casttitle: {
+    fontSize: FONT_SIZES.BODY_TEXT + 2,
+    color: COLORS.TEXT_PRIMARY,
+  },
+  imagecastscroll: {
     width: 80,
-    height: 50,
-    resizeMode: 'contain',
+    height: 80,
+    borderRadius: 50,
   },
-  
+  castname: {
+    fontSize: FONT_SIZES.BUTTON_TEXT,
+    color: COLORS.TEXT_PRIMARY,
+    marginTop: 5,
+  },
 });
 
 export default Detailsscreen;

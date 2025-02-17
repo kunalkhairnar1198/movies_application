@@ -13,11 +13,12 @@ import { authActions } from '../../Store/auth-slice/authslice';
 import { useNavigation } from '@react-navigation/native';
 
 
-const Profilescreen = ({naviagation}) => {
+const Profilescreen = () => {
   const logedInUser = useSelector(state => state.auth.logedinUser)
   const watchlist = useSelector(state => state.movies.watchlistMovies)
   const [isWatchlist, setIsWatchlist] = useState(false)
   const dispatch = useDispatch()
+  const naviagation = useNavigation()
 
   console.log(logedInUser)
 
@@ -31,7 +32,7 @@ const Profilescreen = ({naviagation}) => {
   }
 
   const deleteUserHandle =(id)=>{
-    console.log(id)
+    // console.log(id)
     dispatch(authActions.deleteUser(id))
     naviagation.navigate('SignIn')
   }
@@ -40,7 +41,7 @@ const Profilescreen = ({naviagation}) => {
     <View style={styles.container}>
          <View style={styles.headercontainer}>
             <TouchableOpacity
-              onPress={() => navigation.goBack()}
+              onPress={() => naviagation.goBack()}
               style={styles.backButton}>
               <Ionicons name="chevron-back" size={40} color={COLORS.PRIMARY} />
             </TouchableOpacity>
@@ -59,7 +60,7 @@ const Profilescreen = ({naviagation}) => {
             </View>  
             {isWatchlist && <View>
               <Text style={styles.watchtext}>Watchlist</Text>
-              <MoviesList popularMovies={watchlist} />
+              <MoviesList item={watchlist} />
             </View>}
     </View>
   )

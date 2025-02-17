@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import COLORS from '../../constants/colors';
@@ -9,18 +9,32 @@ import DeleteIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import WatchIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import FONT_SIZES from '../../constants/text';
 import MoviesList from '../../Components/Movies/MoviesList/MoviesList';
+import { authActions } from '../../Store/auth-slice/authslice';
+import { useNavigation } from '@react-navigation/native';
 
 
-const Profilescreen = ({navigation}) => {
+const Profilescreen = ({naviagation}) => {
   const logedInUser = useSelector(state => state.auth.logedinUser)
   const watchlist = useSelector(state => state.movies.watchlistMovies)
   const [isWatchlist, setIsWatchlist] = useState(false)
+  const dispatch = useDispatch()
 
+  console.log(logedInUser)
 
   const handleWatchlist =()=>{
     setIsWatchlist(true)
   }
 
+  const logoutHandle =()=>{
+    dispatch(authActions.setLogOutUser())
+    console.log('logout')
+  }
+
+  const deleteUserHandle =(id)=>{
+    console.log(id)
+    dispatch(authActions.deleteUser(id))
+    naviagation.navigate('SignIn')
+  }
 
   return (
     <View style={styles.container}>
@@ -34,14 +48,13 @@ const Profilescreen = ({navigation}) => {
             </View>
 
             <View style={styles.profileCard}>
-              <Text>Profile Details</Text>
               <Image source={require('../../assets/images/profile.png')} resizeMode='contain' style={styles.image}/>
               <Text style={styles.texts}>{logedInUser?.name}</Text>
               <Text style={styles.texts}>{logedInUser?.number}</Text>
             </View>  
             <View style={styles.buttons}>
-              <LogOutIcon name='logout' style={styles.icons} size={35} onPress={()=>console.log('logout')}/>
-              <DeleteIcon name='delete-outline' style={styles.icons} size={35} onPress={()=>console.log('delete Account')}/>
+              <LogOutIcon name='logout' style={styles.icons} size={35} onPress={()=>logoutHandle()}/>
+              <DeleteIcon name='delete-outline' style={styles.icons} size={35} onPress={()=>deleteUserHandle(logedInUser.id)}/>
               <WatchIcon name='bookmark-outline' style={styles.icons} size={35} onPress={()=>handleWatchlist()}/>
             </View>  
             {isWatchlist && <View>

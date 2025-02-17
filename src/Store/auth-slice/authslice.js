@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState ={
         users:[],
-        logedinUser:'',
+        logedinUser:null,
         isLogedIn: false,
         message:'',
 
@@ -12,46 +12,48 @@ const authSlice =createSlice({
     name:'auth',
     initialState,
     reducers:{
-        setRegisterUser:(state, action)=>{
+        setRegisterUser: (state, action) => {
             if (!state.users) {
-                state.users = []; 
+                state.users = [];
             }
-
+        
             const newUser = action.payload;
-
             const userExists = state.users.some(user => user.email === newUser.email);
-
+        
             if (!userExists) {
-                state.users.push(newUser);
-                // console.log("User registered successfully:", newUser);
-                state.message ="Registration successful !";
-
+                state.users = [...state.users, newUser]; 
+                state.message = "Registration successful!";
             } else {
-                // console.log("User already exists:", newUser.email);
                 state.message = "User already exists!";
-
             }
         },
-        setLoginUser:(state, action)=>{
+        
+        setLoginUser: (state, action) => {
             const { email, password } = action.payload;
-  
+          
             const foundUser = state.users.find(
-              (user) =>
-                user.email.toLowerCase() === email.toLowerCase() &&
-                user.password === password
+              (user) => user.email.toLowerCase() === email.toLowerCase()
             );
-      
+          
             if (foundUser) {
+              if (foundUser.password === password) {
                 state.logedinUser = foundUser;
-                state.message ="LogedIn succesfull"
-            //   console.log("LogedIn succesfull",foundUser)
+                state.message = "Logged in successfully!";
+              } else {
+                state.logedinUser = null;
+                state.message = "Invalid password!";
+              }
             } else {
-                state,message = "Invalid creadential !"
-            //   console.log('Invalid creadential !')
+              state.logedinUser = null;
+              state.message = "User does not exist!";
             }
-        },
+          },          
         setLogOutUser:(state, action)=>{
-
+            state.logedinUser = null
+        },
+        deleteUser(state, action){
+            const indexToRemove = state.users.findIndex(obj => obj.id === action.payload.id)
+            state.users.splice(indexToRemove ,1 )
         }
 
 

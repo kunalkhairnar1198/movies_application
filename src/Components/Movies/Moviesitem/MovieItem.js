@@ -30,8 +30,9 @@ const MovieItem = ({item}) => {
   const switchToDetailPageHandler = id => {
     dispatch(getDetailMovies(id));
 
-    if (route.name === 'Profile') {
-      navigation.jumpTo('Homestack', {screen: 'Detailscreen'});
+    if (route.name === 'Profile' || route.name === 'Favorite') {
+      console.log(route)
+      navigation.navigate('Homestack', {screen: 'Detailscreen'});
     } else {
       navigation.navigate('Detailscreen');
     }

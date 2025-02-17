@@ -47,7 +47,7 @@ const movieSlice = createSlice({
           state.watchlistMovies = [...state.watchlistMovies, action.payload];
           console.log("Movie added to watchlist:", state.watchlistMovies);
         } else {
-          state.favoriteMovies.splice(existingMovieIndex, 1);
+          state.watchlistMovies.splice(existingMovieIndex, 1);
           console.log("Movie removed from watchlist:", state.watchlistMovies);
         }
     },

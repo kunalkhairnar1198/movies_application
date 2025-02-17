@@ -48,39 +48,27 @@ const Singup = () => {
   });
 
 
-  const submitHandle =(values, resetForm)=>{
-    // console.log(values)
-   dispatch(authActions.setRegisterUser(values))
-   
+  const submitHandle = (values, resetForm) => {
+    dispatch(authActions.setRegisterUser(values));
+
     if(messages){
-      if (messages === "Registration successful!") {
-        
-        Toast.show({
-          type: "success",
-          text1: "Success",
-          text2: messages,
-          position: 'top',
-          visibilityTime: 5000, 
-        })
-        // resetForm();
 
-      }else if(messages === "User already exists!"){
+        if (messages === "Registration successful!") {
+            Toast.show({
+                type: messages === "Registration successful!" ? "success" : "error",
+                text1: messages === "Registration successful!" ? "Success" : "Error",
+                text2: messages,
+                position: 'top',
+                visibilityTime: 5000,
+            });
 
-        Toast.show({
-          type:'error',
-          text1:'Error',
-          text2:messages,
-          position: 'top',
-          visibilityTime: 5000, 
-        })
-        resetForm()
-        
-      }
-      
+            if (messages !== "User already exists!") {
+                resetForm();
+            }
+        }
     }
-        
-      
-  }  
+};
+
 
   return (
     <ImageBackground source={IMAGES.BG_LOGIN_IMG} style={styles.background} resizeMode='cover'>

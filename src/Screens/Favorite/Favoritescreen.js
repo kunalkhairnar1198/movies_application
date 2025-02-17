@@ -17,7 +17,10 @@ const Favoritescreen = () => {
       renderItem={({ item }) => (
         <MovieItem item={item}/>
     )}
+    
       showsHorizontalScrollIndicator={false}
+      numColumns={2} 
+      columnWrapperStyle={{ justifyContent: "space-between", paddingHorizontal: 14 }} 
       contentContainerStyle={styles.flatListContent}
       ListEmptyComponent={
         <View style={styles.emptyComponent}>
@@ -38,11 +41,6 @@ const styles = StyleSheet.create({
 
   flatListContent: {
     marginTop: 40,   
-    marginLeft: 14,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "center",
-    justifyContent: "flex-start", 
   },
 
   emptyComponent: {

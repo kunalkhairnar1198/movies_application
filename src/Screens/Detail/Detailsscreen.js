@@ -60,6 +60,7 @@ const Detailsscreen = ({route}) => {
     };
   
     const addWatchlistHandler = item => {
+      console.log(item)
       if (toastMessage === 'Movie added to watchlist') {
         Toast.show({
           type: 'success',
@@ -125,10 +126,10 @@ const Detailsscreen = ({route}) => {
         </View>
 
         <View style={styles.buttonSection}>
-          <Buttoncompo onPress={addWatchlistHandler}>
+          <Buttoncompo onPress={()=>addWatchlistHandler(moviesDetails)}>
             <Fontisto name="favorite" size={30} color="white" />
           </Buttoncompo>
-          <Buttoncompo onPress={addFavoriteListHanlder}>
+          <Buttoncompo onPress={()=>addFavoriteListHanlder(moviesDetails)}>
             <AntDesign name="heart" size={30} color="white" />
           </Buttoncompo>
         </View>

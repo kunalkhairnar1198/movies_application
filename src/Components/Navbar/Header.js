@@ -12,13 +12,13 @@ import { useSelector } from 'react-redux'
 const Header = () => {
     const navigation = useNavigation()
     const logedinUser = useSelector(state => state.auth.logedinUser)
-    console.log(logedinUser)
+    // console.log(logedinUser)
 
 
     return (
     <View style={styles.container}>
     <View style={styles.profile}>
-        <ProfileIcon name='user' color={COLORS.PRIMARY} size={40}/>
+        <ProfileIcon name='user' color={COLORS.PRIMARY} size={40} onPress={()=>navigation.navigate('Profile')}/>
         <Text style={styles.profileTitle}>{logedinUser?.name || 'Hello please login'}</Text>
     </View>
     <TouchableOpacity onPress={()=>navigation.navigate('Searchscreen')}>

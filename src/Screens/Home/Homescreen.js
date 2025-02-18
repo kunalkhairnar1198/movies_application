@@ -1,4 +1,4 @@
-import {Dimensions, ScrollView, StyleSheet, Text, View} from 'react-native';
+import { ActivityIndicator, Dimensions, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
 import {useSharedValue} from 'react-native-reanimated';
@@ -23,9 +23,10 @@ const Homescreen = () => {
   const PopularMovies = useSelector(state => state.movies.popularMovies);
   const TopRatedMovies = useSelector(state => state.movies.top_ratedMovies);
   const upComingMovies = useSelector(state => state.movies.upComingMovies);
+  const loading = useSelector(state => state.movies.loading)
   const dispatch = useDispatch();
   const progress = useSharedValue(0);
-
+  console.log(loading)
   // console.log(TopRatedMovies)
   // console.log(TrendingMovies)
   // console.log(PopularMovies)
@@ -41,6 +42,9 @@ const Homescreen = () => {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View>
+        {!loading ? <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color="#ffffff" />
+            </View>: 
           <Carousel
             data={TrendingMovies}
             width={width}
@@ -56,7 +60,8 @@ const Homescreen = () => {
             onProgressChange={progress}
             renderItem={({item}) => <CarouselItem item={item} />}
           />
-        </View>
+          }
+          </View>
 
         <View style={styles.popularMovies}>
           <Text style={styles.texttitle}>Popular Movies</Text>
@@ -90,6 +95,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: FONT_SIZES.SUBTITLE + 2,
     color: COLORS.TEXT_PRIMARY,
+  },
+  loadingContainer: {
+    flex: 1,
+    marginTop:100
   },
 });
 

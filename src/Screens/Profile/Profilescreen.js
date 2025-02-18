@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { authActions } from '../../Store/auth-slice/authslice';
+import { useNavigation } from '@react-navigation/native';
 
 import COLORS from '../../constants/colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -9,18 +11,18 @@ import DeleteIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import WatchIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import FONT_SIZES from '../../constants/text';
 import MoviesList from '../../Components/Movies/MoviesList/MoviesList';
-import { authActions } from '../../Store/auth-slice/authslice';
-import { useNavigation } from '@react-navigation/native';
+import CustomModal from '../../Components/Modal/CustomModal';
 
 
 const Profilescreen = () => {
   const logedInUser = useSelector(state => state.auth.logedinUser)
   const watchlist = useSelector(state => state.movies.watchlistMovies)
   const [isWatchlist, setIsWatchlist] = useState(false)
+  const [visible, setIsVisible] = useState(false)
   const dispatch = useDispatch()
   const naviagation = useNavigation()
 
-  console.log(logedInUser)
+  // console.log(logedInUser)
 
   const handleWatchlist =()=>{
     setIsWatchlist(true)
@@ -34,7 +36,12 @@ const Profilescreen = () => {
   const deleteUserHandle =(id)=>{
     // console.log(id)
     dispatch(authActions.deleteUser(id))
-    naviagation.navigate('SignIn')
+    dispatch(authActions.setLogOutUser())
+
+  }
+
+  const isModalisOpen=()=>{
+    setIsVisible(true)
   }
 
   return (
@@ -47,6 +54,7 @@ const Profilescreen = () => {
             </TouchableOpacity>
             <Text style={styles.pageTitle}>Profile</Text>
             </View>
+            <CustomModal isVisible={visible} message={'Are you sure you want to delete?'} deleteUserHandle={deleteUserHandle} onClose={() => setIsVisible(false)}/>
 
             <View style={styles.profileCard}>
               <Image source={require('../../assets/images/profile.png')} resizeMode='contain' style={styles.image}/>
@@ -55,7 +63,7 @@ const Profilescreen = () => {
             </View>  
             <View style={styles.buttons}>
               <LogOutIcon name='logout' style={styles.icons} size={35} onPress={()=>logoutHandle()}/>
-              <DeleteIcon name='delete-outline' style={styles.icons} size={35} onPress={()=>deleteUserHandle(logedInUser.id)}/>
+              <DeleteIcon name='delete-outline' style={styles.icons} size={35} onPress={isModalisOpen}/>
               <WatchIcon name='bookmark-outline' style={styles.icons} size={35} onPress={()=>handleWatchlist()}/>
             </View>  
             {isWatchlist && <View>

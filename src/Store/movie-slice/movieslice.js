@@ -28,7 +28,7 @@ const movieSlice = createSlice({
   reducers: {
     setTrendingMovies: (state, action) => {
       state.trendingMovies = action.payload;
-      state.loading = false;
+      state.loading = true
     },
     setPupularMovies: (state, action) => {
       state.popularMovies = action.payload;
@@ -51,7 +51,7 @@ const movieSlice = createSlice({
       state.castCredit = action.payload;
     },
     isLoadingData: (state, action) => {
-      state.loading = true;
+      state.loading = false;
     },
     setMovieFavoriteList: (state, action) => {
       const existingMovieIndex = state.favoriteMovies.findIndex(
@@ -91,7 +91,6 @@ export default movieSlice.reducer;
 
 export const getTrendingMovies = () => {
   return async dispatch => {
-    dispatch(moviesActions.isLoadingData());
     try {
       const response = await axios.get(trendingMoviesEndpoint);
       dispatch(moviesActions.setTrendingMovies(response.data.results));

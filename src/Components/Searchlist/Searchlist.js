@@ -13,7 +13,7 @@ const Searchlist = ({item}) => {
 
   const switchToDetailPageHandler =(id)=>{
       dispatch(getDetailMovies(id))
-      navigation.navigate('Detailscreen')
+      navigation.navigate('Detailscreen', {id:id})
   }
   
   return (

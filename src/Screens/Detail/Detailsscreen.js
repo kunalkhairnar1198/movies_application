@@ -2,9 +2,12 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {ScrollView} from 'react-native-gesture-handler';
 import {getLogoImage, image500} from '../../constants/images';
-import {useEffect} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {getDetailMovies, moviesActions} from '../../Store/movie-slice/movieslice';
+import {
+  getDetailMovies,
+  moviesActions,
+} from '../../Store/movie-slice/movieslice';
 
 import FONT_SIZES from '../../constants/text';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -12,70 +15,44 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import COLORS from '../../constants/colors';
 import Buttoncompo from '../../Components/Button/Buttoncompo';
-import Toast from 'react-native-toast-message';
 
 const Detailsscreen = ({route}) => {
-  const moviesDetails = useSelector(state => state.movies.detailsMovie);
-  const moviesCast = useSelector(state => state.movies.castCredit);
-  const toastMessage = useSelector(state => state.movies.toastMessage)
+  const {id} = route.params;
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const {id} = route.params
+  const moviesDetails = useSelector(state => state.movies.detailsMovie);
+  const moviesCast = useSelector(state => state.movies.castCredit);
+  const favoriteMovies = useSelector(state => state.movies.favoriteMovies);
+  const watchlistMovies = useSelector(state => state.movies.watchlistMovies);
 
+  const isFavorite = useMemo(
+    () => favoriteMovies.some(movie => movie.id === id),
+    [favoriteMovies, id],
+  );
 
-  useEffect(()=>{
-    dispatch(getDetailMovies(id))
-  },[id])
+  const isInWatchlist = useMemo(
+    () => watchlistMovies.some(movie => movie.id === id),
+    [watchlistMovies, id],
+  );
 
   useEffect(() => {
+    dispatch(getDetailMovies(id));
+  }, [dispatch, id]);
 
-    const header = navigation.getParent()?.setOptions({headerShown: false});
-    if (moviesDetails) {
-      navigation.setOptions({title: `${moviesDetails?.original_title}`});
-    }
-    return () => {
-      navigation.getParent()?.setOptions({headerShown: false});
-    };
+  useEffect(() => {
+    navigation.setOptions({
+      title: moviesDetails?.original_title || 'Details',
+    });
   }, [navigation, moviesDetails]);
 
+  const addFavoriteListHandler = useCallback(() => {
+    dispatch(moviesActions.setMovieFavoriteList(moviesDetails));
+  }, [dispatch, moviesDetails]);
 
-
-  const addFavoriteListHanlder = item => {
-      if (toastMessage === 'Succesfully added Favorite') {
-        Toast.show({
-          type: 'success',
-          text1: toastMessage,
-          text2: `Added Movie Favorite`,
-        });
-      } else if (toastMessage === 'Succesfully Removed Movie Favorite list') {
-        Toast.show({
-          type: 'error',
-          text1: toastMessage,
-          text2: `Removed Movie Favorite`,
-        });
-      }
-  
-      dispatch(moviesActions.setMovieFavoriteList(item));
-    };
-  
-    const addWatchlistHandler = item => {
-      console.log(item)
-      if (toastMessage === 'Movie added to watchlist') {
-        Toast.show({
-          type: 'success',
-          text1: toastMessage,
-          text2: `Added Movie watchlist`,
-        });
-      } else if (toastMessage === 'Movie removed from watchlist') {
-        Toast.show({
-          type: 'error',
-          text1: toastMessage,
-          text2: `Removed Movie from watchlist`,
-        });
-      }
-      dispatch(moviesActions.setMovieWatchList(item));
-    };
+  const addWatchlistHandler = useCallback(() => {
+    dispatch(moviesActions.setMovieWatchList(moviesDetails));
+  }, [dispatch, moviesDetails]);
 
   return (
     <ScrollView style={styles.container}>
@@ -126,11 +103,19 @@ const Detailsscreen = ({route}) => {
         </View>
 
         <View style={styles.buttonSection}>
-          <Buttoncompo onPress={()=>addWatchlistHandler(moviesDetails)}>
-            <Fontisto name="favorite" size={30} color="white" />
+          <Buttoncompo onPress={addFavoriteListHandler}>
+            <AntDesign
+              name="heart"
+              size={30}
+              color={isFavorite ? 'red' : 'white'}
+            />
           </Buttoncompo>
-          <Buttoncompo onPress={()=>addFavoriteListHanlder(moviesDetails)}>
-            <AntDesign name="heart" size={30} color="white" />
+          <Buttoncompo onPress={addWatchlistHandler}>
+            <Fontisto
+              name="favorite"
+              size={30}
+              color={isInWatchlist ? 'red' : 'white'}
+            />
           </Buttoncompo>
         </View>
 

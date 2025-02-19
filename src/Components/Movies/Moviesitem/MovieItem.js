@@ -15,22 +15,26 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Buttoncompo from '../../Button/Buttoncompo';
-import Toast from 'react-native-toast-message';
 
 const {width, height} = Dimensions.get('window');
 
 const MovieItem = ({item}) => {
   const dispatch = useDispatch();
-  const toastMessage = useSelector(state => state.movies.toastMessage);
-  const navigation = useNavigation();
   const route = useRoute();
+  const navigation = useNavigation();
+
+  const favoriteMovies = useSelector(state => state.movies.favoriteMovies);
+  const watchlistMovies = useSelector(state => state.movies.watchlistMovies);
+
+  const isFavorite = favoriteMovies.some(movie => movie.id === item.id);
+  const isInWatchlist = watchlistMovies.some(movie => movie.id === item.id);
+
+  // console.log(isFavorite, isInWatchlist)
 
   const switchToDetailPageHandler = id => {
-   
-    dispatch(moviesActions.setClearMovieDetails())
+    dispatch(moviesActions.setClearMovieDetails());
 
     if (route.name === 'Profile' || route.name === 'Favorite') {
-      
       navigation.navigate('Homestack', {
         screen: 'Detailscreen',
         params: {id: id},
@@ -42,37 +46,10 @@ const MovieItem = ({item}) => {
   };
 
   const addFavoriteListHanlder = item => {
-    if (toastMessage === 'Succesfully added Favorite') {
-      Toast.show({
-        type: 'success',
-        text1: toastMessage,
-        text2: `Added Movie Favorite`,
-      });
-    } else if (toastMessage === 'Succesfully Removed Movie Favorite list') {
-      Toast.show({
-        type: 'error',
-        text1: toastMessage,
-        text2: `Removed Movie Favorite`,
-      });
-    }
-
     dispatch(moviesActions.setMovieFavoriteList(item));
   };
 
   const addWatchlistHandler = item => {
-    if (toastMessage === 'Movie added to watchlist') {
-      Toast.show({
-        type: 'success',
-        text1: toastMessage,
-        text2: `Added Movie watchlist`,
-      });
-    } else if (toastMessage === 'Movie removed from watchlist') {
-      Toast.show({
-        type: 'error',
-        text1: toastMessage,
-        text2: `Removed Movie from watchlist`,
-      });
-    }
     dispatch(moviesActions.setMovieWatchList(item));
   };
 
@@ -96,10 +73,18 @@ const MovieItem = ({item}) => {
             </View>
             <View style={styles.buttonSection}>
               <Buttoncompo onPress={() => addWatchlistHandler(item)}>
-                <Fontisto name="favorite" size={20} color="white" />
+                <Fontisto
+                  name="favorite"
+                  size={20}
+                  color={isInWatchlist ? 'red' : 'white'}
+                />
               </Buttoncompo>
               <Buttoncompo onPress={() => addFavoriteListHanlder(item)}>
-                <AntDesign name="heart" size={20} color="white" />
+                <AntDesign
+                  name="heart"
+                  size={20}
+                  color={isFavorite ? 'red' : 'white'}
+                />
               </Buttoncompo>
             </View>
           </View>

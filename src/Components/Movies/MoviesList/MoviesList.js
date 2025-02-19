@@ -5,7 +5,7 @@ import MovieItem from '../Moviesitem/MovieItem';
 import COLORS from '../../../constants/colors';
 
 const MoviesList = ({item}) => {
-  console.log(item);
+  // console.log(item);
 
   return (
     <View style={styles.container}>

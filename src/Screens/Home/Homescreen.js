@@ -19,14 +19,17 @@ import FONT_SIZES from '../../constants/text';
 const width = Dimensions.get('window').width;
 
 const Homescreen = () => {
+  const dispatch = useDispatch();
+  const progress = useSharedValue(0);
+
   const TrendingMovies = useSelector(state => state.movies.trendingMovies);
   const PopularMovies = useSelector(state => state.movies.popularMovies);
   const TopRatedMovies = useSelector(state => state.movies.top_ratedMovies);
   const upComingMovies = useSelector(state => state.movies.upComingMovies);
+  
   const loading = useSelector(state => state.movies.loading)
-  const dispatch = useDispatch();
-  const progress = useSharedValue(0);
-  console.log(loading)
+ 
+  // console.log(loading)
   // console.log(TopRatedMovies)
   // console.log(TrendingMovies)
   // console.log(PopularMovies)

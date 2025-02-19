@@ -19,7 +19,6 @@ const initialState = {
   favoriteMovies: [],
   detailsMovie: null,
   loading: true,
-  toastMessage: null,
 };
 
 const movieSlice = createSlice({
@@ -28,7 +27,7 @@ const movieSlice = createSlice({
   reducers: {
     setTrendingMovies: (state, action) => {
       state.trendingMovies = action.payload;
-      state.loading = true
+      state.loading = true;
     },
     setPupularMovies: (state, action) => {
       state.popularMovies = action.payload;
@@ -43,7 +42,7 @@ const movieSlice = createSlice({
       state.detailsMovie = action.payload;
       // console.log(state.detailsMovie)
     },
-    setClearMovieDetails:(state, action)=>{
+    setClearMovieDetails: (state, action) => {
       state.castCredit = null;
       state.detailsMovie = null;
     },
@@ -54,32 +53,33 @@ const movieSlice = createSlice({
       state.loading = false;
     },
     setMovieFavoriteList: (state, action) => {
-      const existingMovieIndex = state.favoriteMovies.findIndex(
+      const exists = state.favoriteMovies.some(
         item => item.id === action.payload.id,
       );
 
-      if (existingMovieIndex === -1) {
+      if (!exists) {
         state.favoriteMovies = [...state.favoriteMovies, action.payload];
-        state.toastMessage = 'Succesfully added Favorite';
         console.log('Movie added to favorites:', state.favoriteMovies);
       } else {
-        state.favoriteMovies.splice(existingMovieIndex, 1);
-        state.toastMessage = 'Succesfully Removed Movie Favorite list';
+        state.favoriteMovies = state.favoriteMovies.filter(
+          item => item.id !== action.payload.id,
+        );
         console.log('Movie removed from favorites:', state.favoriteMovies);
       }
     },
+
     setMovieWatchList: (state, action) => {
-      const existingMovieIndex = state.watchlistMovies.findIndex(
+      const exists = state.watchlistMovies.some(
         item => item.id === action.payload.id,
       );
 
-      if (existingMovieIndex === -1) {
+      if (!exists) {
         state.watchlistMovies = [...state.watchlistMovies, action.payload];
-        state.toastMessage = 'Movie added to watchlist';
         console.log('Movie added to watchlist:', state.watchlistMovies);
       } else {
-        state.watchlistMovies.splice(existingMovieIndex, 1);
-        state.toastMessage = 'Movie removed from watchlist';
+        state.watchlistMovies = state.watchlistMovies.filter(
+          item => item.id !== action.payload.id,
+        );
         console.log('Movie removed from watchlist:', state.watchlistMovies);
       }
     },

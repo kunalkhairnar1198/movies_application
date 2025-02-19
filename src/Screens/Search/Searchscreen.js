@@ -10,7 +10,6 @@ import {
   VirtualizedList,
 } from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {useDispatch} from 'react-redux';
 import axios from 'axios';
 
 import useDebounce from '../../hooks/useDebounce';
@@ -21,7 +20,7 @@ import Searchlist from '../../Components/Searchlist/Searchlist';
 
 const Searchscreen = () => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
+
   const [searchData, setSearchData] = useState('');
   const [result, setIsResult] = useState([]);
 

@@ -71,24 +71,25 @@ const MovieItem = ({item}) => {
                 IMDb: {item?.vote_average?.toFixed(1)}
               </Text>
             </View>
-            <View style={styles.buttonSection}>
+           
+          </View>
+        </TouchableOpacity>
+        <View style={styles.buttonSection}>
               <Buttoncompo onPress={() => addWatchlistHandler(item)}>
                 <Fontisto
                   name="favorite"
-                  size={20}
+                  size={25}
                   color={isInWatchlist ? 'red' : 'white'}
                 />
               </Buttoncompo>
               <Buttoncompo onPress={() => addFavoriteListHanlder(item)}>
                 <AntDesign
                   name="heart"
-                  size={20}
+                  size={25}
                   color={isFavorite ? 'red' : 'white'}
                 />
               </Buttoncompo>
             </View>
-          </View>
-        </TouchableOpacity>
       </ImageBackground>
     </View>
   );
@@ -123,12 +124,26 @@ const styles = StyleSheet.create({
   bottomSection: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5, 
+    padding: 10,
+    borderRadius: 10,
   },
   buttonSection: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     gap: 10,
-  },
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    padding: 10,
+    borderRadius: 10,
+  },  
   movieRating: {
     fontSize: 14,
     fontWeight: 'bold',

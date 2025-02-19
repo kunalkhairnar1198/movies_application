@@ -18,7 +18,6 @@ const initialState = {
   watchlistMovies: [],
   favoriteMovies: [],
   detailsMovie: null,
-  loading: true,
 };
 
 const movieSlice = createSlice({
@@ -27,7 +26,6 @@ const movieSlice = createSlice({
   reducers: {
     setTrendingMovies: (state, action) => {
       state.trendingMovies = action.payload;
-      state.loading = true;
     },
     setPupularMovies: (state, action) => {
       state.popularMovies = action.payload;
@@ -48,9 +46,6 @@ const movieSlice = createSlice({
     },
     setMoviesCast: (state, action) => {
       state.castCredit = action.payload;
-    },
-    isLoadingData: (state, action) => {
-      state.loading = false;
     },
     setMovieFavoriteList: (state, action) => {
       const exists = state.favoriteMovies.some(

@@ -27,7 +27,6 @@ const Homescreen = () => {
   const TopRatedMovies = useSelector(state => state.movies.top_ratedMovies);
   const upComingMovies = useSelector(state => state.movies.upComingMovies);
   
-  const loading = useSelector(state => state.movies.loading)
  
   // console.log(loading)
   // console.log(TopRatedMovies)
@@ -45,9 +44,6 @@ const Homescreen = () => {
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View>
-        {!loading ? <View style={styles.loadingContainer}>
-              <ActivityIndicator size="large" color="#ffffff" />
-            </View>: 
           <Carousel
             data={TrendingMovies}
             width={width}
@@ -63,7 +59,6 @@ const Homescreen = () => {
             onProgressChange={progress}
             renderItem={({item}) => <CarouselItem item={item} />}
           />
-          }
           </View>
 
         <View style={styles.popularMovies}>
@@ -99,10 +94,7 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZES.SUBTITLE + 2,
     color: COLORS.TEXT_PRIMARY,
   },
-  loadingContainer: {
-    flex: 1,
-    marginTop:100
-  },
+ 
 });
 
 export default Homescreen;

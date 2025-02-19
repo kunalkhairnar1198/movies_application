@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {authActions} from '../../Store/auth-slice/authslice';
 import {useNavigation} from '@react-navigation/native';
 
@@ -45,7 +45,7 @@ const Profilescreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView  style={styles.container}>
       <View style={styles.headercontainer}>
         <TouchableOpacity
           onPress={() => naviagation.goBack()}
@@ -96,7 +96,7 @@ const Profilescreen = () => {
           <MoviesList item={watchlist} />
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 };
 

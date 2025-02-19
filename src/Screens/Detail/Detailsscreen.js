@@ -268,10 +268,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   casttitle: {
+    paddingBottom:10,
     fontSize: FONT_SIZES.BODY_TEXT + 2,
     color: COLORS.TEXT_PRIMARY,
   },
   imagecastscroll: {
+    margin:20,
     width: 80,
     height: 80,
     borderRadius: 50,
@@ -279,6 +281,7 @@ const styles = StyleSheet.create({
   castname: {
     fontSize: FONT_SIZES.BUTTON_TEXT,
     color: COLORS.TEXT_PRIMARY,
+    textAlign:'center',
     marginTop: 5,
   },
 });

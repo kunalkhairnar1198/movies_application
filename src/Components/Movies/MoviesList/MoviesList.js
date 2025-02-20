@@ -1,32 +1,36 @@
 import React from 'react';
-import {ActivityIndicator, FlatList, StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View, VirtualizedList} from 'react-native';
 
 import MovieItem from '../Moviesitem/MovieItem';
 import COLORS from '../../../constants/colors';
 import Loader from '../../Loader/Loader';
 
-const MoviesList = ({item, onLoadMore}) => {
+const MoviesList = ({item, onLoadMore, isLoading}) => {
   // console.log(item);
 
   return (
     <View style={styles.container}>
-      <FlatList
+      <VirtualizedList
         data={item}
-        keyExtractor={(item, index) => (item.id ? item?.id.toString() : index.toString())}
+        initialNumToRender={10}
+        keyExtractor={(item, index) =>
+          item?.id ? item.id.toString() : index.toString()
+        }
         renderItem={({item}) => <MovieItem item={item} />}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         onEndReached={onLoadMore}
         onEndReachedThreshold={0.5}
-        initialNumToRender={10}
-        ListFooterComponent={item ? <Loader/> : null}
+        ListFooterComponent={item.length > 0 && isLoading ? <Loader /> : null}
         contentContainerStyle={styles.flatListContent}
         ListEmptyComponent={
           <View>
-            <Text style={styles.emptyComponent}>No Moveis Found</Text>
+            <Text style={styles.emptyComponent}>No Movies Found</Text>
           </View>
         }
+        getItem={(data, index) => data[index]} 
+        getItemCount={data => data.length} 
       />
     </View>
   );
@@ -45,7 +49,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     padding: 10,
     fontSize: 18,
     textAlign: 'center',

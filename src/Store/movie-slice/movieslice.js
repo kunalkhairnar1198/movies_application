@@ -6,7 +6,7 @@ import {
   moviesDetailsEndpoint,
   topRatedMoviesEndpoint,
   trendingMoviesEndpoint,
-  upcomingMoviesEndpoint,
+  upcomingMoviesEndpointPage,
 } from '../../constants/api';
 
 const initialState = {
@@ -28,13 +28,13 @@ const movieSlice = createSlice({
       state.trendingMovies = action.payload;
     },
     setPupularMovies: (state, action) => {
-      state.popularMovies =[state.popularMovies, ...action.payload];
+      state.popularMovies = [...state.popularMovies, ...action.payload];
     },
     setTopratedMovies: (state, action) => {
-      state.top_ratedMovies = [state.top_ratedMovies, ...action.payload];
+      state.top_ratedMovies = [...state.top_ratedMovies, ...action.payload];
     },
     setUpcomingMovies: (state, action) => {
-      state.upComingMovies = action.payload;
+      state.upComingMovies = [...state.upComingMovies, ...action.payload];
     },
     setDetailsMovies: (state, action) => {
       state.detailsMovie = action.payload;
@@ -95,7 +95,7 @@ export const getTrendingMovies = () => {
   };
 };
 
-export const getPopularMovies = (page = 1) => {
+export const getPopularMovies = page => {
   return async dispatch => {
     try {
       const response = await axios.get(getPopularMoviesEndpoint(page));
@@ -125,8 +125,8 @@ export const getDetailMovies = id => {
   };
 };
 
-export const getTopratedMovies = (page = 1) => {
-  console.log('API CALLED')
+export const getTopratedMovies = page => {
+  console.log('API CALLED');
   return async dispatch => {
     try {
       const response = await axios.get(topRatedMoviesEndpoint(page));
@@ -138,11 +138,11 @@ export const getTopratedMovies = (page = 1) => {
   };
 };
 
-export const getUpcomingMovies = () => {
+export const getUpcomingMovies = page => {
   return async dispatch => {
     try {
-      const response = await axios.get(upcomingMoviesEndpoint);
-      console.log(response.data);
+      const response = await axios.get(upcomingMoviesEndpointPage(page));
+      // console.log(response.data);
       dispatch(moviesActions.setUpcomingMovies(response.data.results));
     } catch (error) {
       console.log('Error Fetching upcomming movies', error);

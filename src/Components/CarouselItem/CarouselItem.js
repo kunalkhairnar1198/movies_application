@@ -1,9 +1,10 @@
 import React from 'react'
-import { ActivityIndicator, Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {  Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import  { image500 } from '../../constants/images'
+import { moviesActions } from '../../Store/movie-slice/movieslice'
 
 import COLORS from '../../constants/colors'
 
@@ -12,8 +13,12 @@ const {width, height} = Dimensions.get('window')
 const CarouselItem = ({item}) => {
   const loading = useSelector(state => state.movies.loading)
   const navigation = useNavigation()
+  const dispatch =  useDispatch()
 
   const switchToDetailPageHandler =(id)=>{
+      
+      dispatch(moviesActions.setClearMovieDetails());
+    
       navigation.navigate('Detailscreen', {id:id})
   }
 

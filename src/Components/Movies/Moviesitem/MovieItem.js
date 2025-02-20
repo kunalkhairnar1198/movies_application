@@ -26,8 +26,8 @@ const MovieItem = ({item}) => {
   const favoriteMovies = useSelector(state => state.movies.favoriteMovies);
   const watchlistMovies = useSelector(state => state.movies.watchlistMovies);
 
-  const isFavorite = favoriteMovies.some(movie => movie?.id === item?.id);
-  const isInWatchlist = watchlistMovies.some(movie => movie?.id === item?.id);
+  const isFavorite = favoriteMovies.some(movie => movie.id === item.id);
+  const isInWatchlist = watchlistMovies.some(movie => movie.id === item.id);
 
   // console.log(isFavorite, isInWatchlist)
 

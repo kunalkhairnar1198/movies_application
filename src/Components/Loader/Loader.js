@@ -1,17 +1,12 @@
 import React from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+import COLORS from '../../constants/colors'
 
 const Loader = () => {
   return (
     <View style={styles.container}>
-        <ActivityIndicator size='large' color='red'/>
+        <ActivityIndicator size='large' color={COLORS.PRIMARY}/>
     </View>
-        //  <View style={styles.transparentBox}>
-        //    <Text style={styles.text}>This text has a transparent background</Text>
-        //  </View>
-        //  <View style={styles.coloredBox}>
-        //    <Text style={styles.text}>This text has a colored background</Text>
-        //  </View>
   )
 }
 

@@ -36,32 +36,42 @@ const Homescreen = () => {
 
   const [page, setPage] = useState(1);
   const [topRatedPage, setTopRatedPage] = useState(1);
+  const [upcomingPage, setUpcomingPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (page) {
-      dispatch(getPopularMovies(page));
-    } else if (topRatedPage) {
-      dispatch(getTopratedMovies(topRatedPage));
-    }
-  }, [page, topRatedPage]);
+    dispatch(getTrendingMovies());
+  }, []);
+
+  useEffect(() => {
+    dispatch(getPopularMovies(page));
+
+    dispatch(getTopratedMovies(topRatedPage));
+
+    dispatch(getUpcomingMovies(upcomingPage));
+
+    setIsLoading(false);
+  }, [page, topRatedPage, upcomingPage]);
 
   const laodMoreMovies = () => {
     setPage(prevPage => prevPage + 1);
+    setIsLoading(true);
   };
 
   const loadMoreTopRatedMovies = () => {
     setTopRatedPage(prevPage => prevPage + 1);
+    setIsLoading(true);
+  };
+
+  const loadMoreUpcomingMovies = () => {
+    setUpcomingPage(prevPage => prevPage + 1);
+    setIsLoading(true);
   };
 
   // console.log(loading)
   // console.log(TopRatedMovies)
   // console.log(TrendingMovies)
   // console.log(PopularMovies)
-
-  useEffect(() => {
-    dispatch(getTrendingMovies());
-    dispatch(getUpcomingMovies());
-  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -86,18 +96,27 @@ const Homescreen = () => {
 
         <View style={styles.popularMovies}>
           <Text style={styles.texttitle}>Popular Movies</Text>
-          <MoviesList item={PopularMovies} onLoadMore={laodMoreMovies} />
+          <MoviesList
+            item={PopularMovies}
+            onLoadMore={laodMoreMovies}
+            isLoading={isLoading}
+          />
         </View>
         <View style={styles.popularMovies}>
           <Text style={styles.texttitle}>Top-Rated Movies</Text>
           <MoviesList
             item={TopRatedMovies}
             onLoadMore={loadMoreTopRatedMovies}
+            isLoading={isLoading}
           />
         </View>
         <View style={styles.popularMovies}>
           <Text style={styles.texttitle}>Uppcoming Movies</Text>
-          <MoviesList item={upComingMovies} />
+          <MoviesList
+            item={upComingMovies}
+            onLoadMore={loadMoreUpcomingMovies}
+            isLoading={isLoading}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

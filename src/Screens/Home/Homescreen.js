@@ -1,6 +1,7 @@
 import {
   ActivityIndicator,
   Dimensions,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
@@ -38,6 +39,7 @@ const Homescreen = () => {
   const [topRatedPage, setTopRatedPage] = useState(1);
   const [upcomingPage, setUpcomingPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     dispatch(getTrendingMovies());
@@ -52,6 +54,26 @@ const Homescreen = () => {
 
     setIsLoading(false);
   }, [page, topRatedPage, upcomingPage]);
+
+  const onRefresh = () => {
+    
+    setRefreshing(true);
+
+    setTimeout(() => {
+      dispatch(getTrendingMovies());
+
+      dispatch(getPopularMovies(1));
+
+      dispatch(getTopratedMovies(1));
+
+      dispatch(getUpcomingMovies(1));
+
+      setPage(1);
+      setTopRatedPage(1);
+      setUpcomingPage(1);
+      setRefreshing(false);
+    }, 3000);
+  };
 
   const laodMoreMovies = () => {
     setPage(prevPage => prevPage + 1);
@@ -75,7 +97,10 @@ const Homescreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <View>
           <Carousel
             data={TrendingMovies}

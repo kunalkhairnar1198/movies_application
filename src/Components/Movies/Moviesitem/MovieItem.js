@@ -15,6 +15,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Buttoncompo from '../../Button/Buttoncompo';
+import COLORS from '../../../constants/colors';
 
 const {width, height} = Dimensions.get('window');
 
@@ -101,6 +102,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     borderRadius: 15,
     overflow: 'hidden',
+    backgroundColor: '#fff', 
+  
+    shadowColor: COLORS.PRIMARY,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+  
+    elevation: 8, 
   },
   imageBackground: {
     flex: 1,

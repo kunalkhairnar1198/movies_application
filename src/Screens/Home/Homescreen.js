@@ -1,8 +1,15 @@
-import { ActivityIndicator, Dimensions, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Dimensions,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useDispatch, useSelector} from 'react-redux';
 import {useSharedValue} from 'react-native-reanimated';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {
   getPopularMovies,
   getTopratedMovies,
@@ -26,8 +33,26 @@ const Homescreen = () => {
   const PopularMovies = useSelector(state => state.movies.popularMovies);
   const TopRatedMovies = useSelector(state => state.movies.top_ratedMovies);
   const upComingMovies = useSelector(state => state.movies.upComingMovies);
-  
- 
+
+  const [page, setPage] = useState(1);
+  const [topRatedPage, setTopRatedPage] = useState(1);
+
+  useEffect(() => {
+    if (page) {
+      dispatch(getPopularMovies(page));
+    } else if (topRatedPage) {
+      dispatch(getTopratedMovies(topRatedPage));
+    }
+  }, [page, topRatedPage]);
+
+  const laodMoreMovies = () => {
+    setPage(prevPage => prevPage + 1);
+  };
+
+  const loadMoreTopRatedMovies = () => {
+    setTopRatedPage(prevPage => prevPage + 1);
+  };
+
   // console.log(loading)
   // console.log(TopRatedMovies)
   // console.log(TrendingMovies)
@@ -35,8 +60,6 @@ const Homescreen = () => {
 
   useEffect(() => {
     dispatch(getTrendingMovies());
-    dispatch(getPopularMovies());
-    dispatch(getTopratedMovies());
     dispatch(getUpcomingMovies());
   }, []);
 
@@ -59,15 +82,18 @@ const Homescreen = () => {
             onProgressChange={progress}
             renderItem={({item}) => <CarouselItem item={item} />}
           />
-          </View>
+        </View>
 
         <View style={styles.popularMovies}>
           <Text style={styles.texttitle}>Popular Movies</Text>
-          <MoviesList item={PopularMovies} />
+          <MoviesList item={PopularMovies} onLoadMore={laodMoreMovies} />
         </View>
         <View style={styles.popularMovies}>
           <Text style={styles.texttitle}>Top-Rated Movies</Text>
-          <MoviesList item={TopRatedMovies} />
+          <MoviesList
+            item={TopRatedMovies}
+            onLoadMore={loadMoreTopRatedMovies}
+          />
         </View>
         <View style={styles.popularMovies}>
           <Text style={styles.texttitle}>Uppcoming Movies</Text>
@@ -94,7 +120,6 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZES.SUBTITLE + 2,
     color: COLORS.TEXT_PRIMARY,
   },
- 
 });
 
 export default Homescreen;

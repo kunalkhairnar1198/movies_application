@@ -26,8 +26,8 @@ const MovieItem = ({item}) => {
   const favoriteMovies = useSelector(state => state.movies.favoriteMovies);
   const watchlistMovies = useSelector(state => state.movies.watchlistMovies);
 
-  const isFavorite = favoriteMovies.some(movie => movie.id === item.id);
-  const isInWatchlist = watchlistMovies.some(movie => movie.id === item.id);
+  const isFavorite = favoriteMovies.some(movie => movie?.id === item?.id);
+  const isInWatchlist = watchlistMovies.some(movie => movie?.id === item?.id);
 
   // console.log(isFavorite, isInWatchlist)
 
@@ -63,7 +63,7 @@ const MovieItem = ({item}) => {
         source={{uri: image500(item?.poster_path)}}
         style={styles.imageBackground}
         imageStyle={styles.imageStyle}>
-        <TouchableOpacity onPress={() => switchToDetailPageHandler(item.id)}>
+        <TouchableOpacity onPress={() => switchToDetailPageHandler(item?.id)}>
           <View style={styles.textContainer}>
             <Text style={styles.movieTitle}>{item?.title}</Text>
             <View style={styles.bottomSection}>

@@ -1,9 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
 import {
+  getPopularMoviesEndpoint,
   movieCastEndpoint,
   moviesDetailsEndpoint,
-  popularMoviesEndpoint,
   topRatedMoviesEndpoint,
   trendingMoviesEndpoint,
   upcomingMoviesEndpoint,
@@ -28,10 +28,10 @@ const movieSlice = createSlice({
       state.trendingMovies = action.payload;
     },
     setPupularMovies: (state, action) => {
-      state.popularMovies = action.payload;
+      state.popularMovies =[state.popularMovies, ...action.payload];
     },
     setTopratedMovies: (state, action) => {
-      state.top_ratedMovies = action.payload;
+      state.top_ratedMovies = [state.top_ratedMovies, ...action.payload];
     },
     setUpcomingMovies: (state, action) => {
       state.upComingMovies = action.payload;
@@ -95,10 +95,10 @@ export const getTrendingMovies = () => {
   };
 };
 
-export const getPopularMovies = () => {
+export const getPopularMovies = (page = 1) => {
   return async dispatch => {
     try {
-      const response = await axios.get(popularMoviesEndpoint);
+      const response = await axios.get(getPopularMoviesEndpoint(page));
       console.log(response.data.results);
       dispatch(moviesActions.setPupularMovies(response.data.results));
     } catch (error) {
@@ -125,11 +125,12 @@ export const getDetailMovies = id => {
   };
 };
 
-export const getTopratedMovies = id => {
+export const getTopratedMovies = (page = 1) => {
+  console.log('API CALLED')
   return async dispatch => {
     try {
-      const response = await axios.get(topRatedMoviesEndpoint);
-      console.log(response);
+      const response = await axios.get(topRatedMoviesEndpoint(page));
+      console.log(response.data.results);
       dispatch(moviesActions.setTopratedMovies(response.data.results));
     } catch (error) {
       console.log('Error Fetching top_rated movies', error);

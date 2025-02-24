@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     borderRadius: 15,
     overflow: 'hidden',
-    backgroundColor: '#fff', 
   
     shadowColor: COLORS.PRIMARY,
     shadowOffset: { width: 0, height: 4 },
@@ -138,7 +137,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5, 
-    padding: 10,
     borderRadius: 10,
   },
   buttonSection: {
@@ -150,7 +148,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    padding: 10,
     borderRadius: 10,
   },  
   movieRating: {

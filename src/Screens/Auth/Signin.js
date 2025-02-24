@@ -24,12 +24,8 @@ import {authActions} from '../../Store/auth-slice/authslice';
 const Signin = () => {
   const naviagation = useNavigation();
   const dispatch = useDispatch();
-  const logedInUser = useSelector(state => state.auth.logedinUser);
-  const signUpUser = useSelector(state => state.auth.users);
-  const messages = useSelector(state => state.auth.message);
-
-  // console.log(signUpUser);
-  // console.log(logedInUser);
+  const registerUsers = useSelector(state => state.auth.users);
+  // console.log(registerUsers)
 
   let userSchema = Yup.object({
     email: Yup.string()
@@ -42,30 +38,24 @@ const Signin = () => {
 
   const loginHandle = (values, resetForm) => {
     console.log(values);
+    const newlogedinuser = values;
 
-    dispatch(authActions.setLoginUser(values));
-
-    if (messages) {
-      if (messages === 'Logged in successfully!') {
-        Toast.show({
-          type: 'success',
-          text1: 'Success',
-          text2: messages,
-          position: 'top',
-          visibilityTime: 5000,
-        });
-        // naviagation.navigate('Hometab');
-        resetForm();
-      } else if (messages === 'Invalid password!') {
-        Toast.show({
-          type: 'error',
-          text1: 'Error',
-          text2: messages,
-          position: 'top',
-          visibilityTime: 5000,
-        });
-        resetForm();
-      }
+    const foundUser = registerUsers.find(
+      user => user.email.toLowerCase() === newlogedinuser.email.toLowerCase(),
+    );
+    if (foundUser) {
+      dispatch(authActions.setLoginUser(foundUser));
+      Toast.show({
+        type: 'success',
+        text1: 'Login Successful!',
+        text2: `Welcome, ${foundUser.email}`,
+      });
+    } else {
+      Toast.show({
+        type: 'error',
+        text1: 'Invalid Credential !',
+        text2: `Please Check email and password `,
+      });
     }
   };
 

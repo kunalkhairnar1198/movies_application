@@ -17,35 +17,11 @@ const authSlice = createSlice({
       }
 
       const newUser = action.payload;
-      const userExists = state.users.some(user => user.email === newUser.email);
-
-      if (!userExists) {
-        state.users = [...state.users, newUser];
-        state.message = 'Registration successful!';
-      } else {
-        state.message = 'User already exists!';
-      }
+      state.users = [...state.users, newUser];
     },
 
     setLoginUser: (state, action) => {
-      const {email, password} = action.payload;
-
-      const foundUser = state.users.find(
-        user => user.email.toLowerCase() === email.toLowerCase(),
-      );
-
-      if (foundUser) {
-        if (foundUser.password === password) {
-          state.logedinUser = foundUser;
-          state.message = 'Logged in successfully!';
-        } else {
-          state.logedinUser = null;
-          state.message = 'Invalid password!';
-        }
-      } else {
-        state.logedinUser = null;
-        state.message = 'User does not exist!';
-      }
+      state.logedinUser = action.payload;
     },
     setLogOutUser: (state, action) => {
       state.logedinUser = null;
@@ -55,7 +31,7 @@ const authSlice = createSlice({
         obj => obj.id === action.payload.id,
       );
       state.users.splice(indexToRemove, 1);
-      console.log(state.users)
+      console.log(state.users);
     },
   },
 });

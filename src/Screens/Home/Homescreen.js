@@ -1,5 +1,4 @@
 import {
-  ActivityIndicator,
   Dimensions,
   RefreshControl,
   ScrollView,
@@ -51,6 +50,8 @@ const Homescreen = () => {
     dispatch(getTopratedMovies(topRatedPage));
 
     dispatch(getUpcomingMovies(upcomingPage));
+
+    onRefresh()
 
     setIsLoading(false);
   }, [page, topRatedPage, upcomingPage]);

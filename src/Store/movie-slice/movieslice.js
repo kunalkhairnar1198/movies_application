@@ -28,14 +28,41 @@ const movieSlice = createSlice({
       state.trendingMovies = action.payload;
     },
     setPupularMovies: (state, action) => {
-      state.popularMovies = [...state.popularMovies, ...action.payload];
+      const newMovies = action.payload;
+
+    const updatedMovies = [
+        ...state.popularMovies, 
+        ...newMovies.filter(
+            (newMovie) => !state.popularMovies.some(existingMovie => existingMovie.id === newMovie.id)
+        )
+    ];
+
+    state.popularMovies = updatedMovies;
     },
     setTopratedMovies: (state, action) => {
-      state.top_ratedMovies = [...state.top_ratedMovies, ...action.payload];
-    },
+      const newMovies = action.payload;
+
+      const updatedMovies = [
+          ...state.top_ratedMovies, 
+          ...newMovies.filter(
+              (newMovie) => !state.top_ratedMovies.some(existingMovie => existingMovie.id === newMovie.id)
+          )
+      ];
+  
+      state.top_ratedMovies = updatedMovies; 
+      },
     setUpcomingMovies: (state, action) => {
-      state.upComingMovies = [...state.upComingMovies, ...action.payload];
-    },
+      const newMovies = action.payload;
+
+      const updatedMovies = [
+          ...state.upComingMovies, 
+          ...newMovies.filter(
+              (newMovie) => !state.upComingMovies.some(existingMovie => existingMovie.id === newMovie.id)
+          )
+      ];
+  
+      state.upComingMovies = updatedMovies; 
+      },
     setDetailsMovies: (state, action) => {
       state.detailsMovie = action.payload;
       // console.log(state.detailsMovie)
@@ -43,6 +70,10 @@ const movieSlice = createSlice({
     setClearMovieDetails: (state, action) => {
       state.castCredit = null;
       state.detailsMovie = null;
+      state.popularMovies= []
+      state.top_ratedMovies= []
+      state.upComingMovies= []
+
     },
     setMoviesCast: (state, action) => {
       state.castCredit = action.payload;

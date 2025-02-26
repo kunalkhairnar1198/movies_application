@@ -85,12 +85,12 @@ const movieSlice = createSlice({
 
       if (!exists) {
         state.favoriteMovies = [...state.favoriteMovies, action.payload];
-        console.log('Movie added to favorites:', state.favoriteMovies);
+        // console.log('Movie added to favorites:', state.favoriteMovies);
       } else {
         state.favoriteMovies = state.favoriteMovies.filter(
           item => item.id !== action.payload.id,
         );
-        console.log('Movie removed from favorites:', state.favoriteMovies);
+        // console.log('Movie removed from favorites:', state.favoriteMovies);
       }
     },
 
@@ -101,12 +101,12 @@ const movieSlice = createSlice({
 
       if (!exists) {
         state.watchlistMovies = [...state.watchlistMovies, action.payload];
-        console.log('Movie added to watchlist:', state.watchlistMovies);
+        // console.log('Movie added to watchlist:', state.watchlistMovies);
       } else {
         state.watchlistMovies = state.watchlistMovies.filter(
           item => item.id !== action.payload.id,
         );
-        console.log('Movie removed from watchlist:', state.watchlistMovies);
+        // console.log('Movie removed from watchlist:', state.watchlistMovies);
       }
     },
   },
@@ -130,7 +130,7 @@ export const getPopularMovies = page => {
   return async dispatch => {
     try {
       const response = await axios.get(getPopularMoviesEndpoint(page));
-      console.log(response.data.results);
+      // console.log(response.data.results);
       dispatch(setPupularMovies(response.data.results));
     } catch (error) {
       console.log('Error fetching popular Movies', error);
@@ -140,14 +140,14 @@ export const getPopularMovies = page => {
 
 export const getDetailMovies = id => {
   return async dispatch => {
-    console.log(id);
+    // console.log(id);
 
     try {
       const response = await axios.get(moviesDetailsEndpoint(id));
       // console.log(response.data)
       const cast_res = await axios.get(movieCastEndpoint(id));
 
-      console.log(cast_res.data);
+      // console.log(cast_res.data);
       dispatch(setMoviesCast(cast_res.data));
       dispatch(setDetailsMovies(response.data));
     } catch (error) {
@@ -157,11 +157,11 @@ export const getDetailMovies = id => {
 };
 
 export const getTopratedMovies = page => {
-  console.log('API CALLED');
+  // console.log('API CALLED');
   return async dispatch => {
     try {
       const response = await axios.get(topRatedMoviesEndpoint(page));
-      console.log(response.data.results);
+      // console.log(response.data.results);
       dispatch(setTopratedMovies(response.data.results));
     } catch (error) {
       console.log('Error Fetching top_rated movies', error);

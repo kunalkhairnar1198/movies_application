@@ -6,7 +6,7 @@ import Singup from '../../Screens/Auth/Singup'
 const Stack = createStackNavigator()
 
 const Authstack = () => {
-    console.log('stacl')
+    // console.log('stacl')
     return (
         <Stack.Navigator initialRouteName='SignIn' screenOptions={{headerShown:false}}>
             <Stack.Screen name='SignIn' component={Signin}/>

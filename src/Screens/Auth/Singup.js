@@ -10,7 +10,7 @@ import {Formik} from 'formik';
 import * as Yup from 'yup';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import {authActions} from '../../Store/auth-slice/authslice';
+import {authActions, setRegisterUser} from '../../Store/auth-slice/authslice';
 
 import LinearGradient from 'react-native-linear-gradient';
 import TextInput from '../../Components/Input/Textinput';
@@ -60,7 +60,7 @@ const Singup = () => {
     );
 
     if (!existingUsers) {
-      dispatch(authActions.setRegisterUser(newUser));
+      dispatch(setRegisterUser(newUser));
 
       // console.log('success');
 
@@ -106,7 +106,7 @@ const Singup = () => {
           validationSchema={userSchema}
           onSubmit={(values, {resetForm}) => {
             submitHandle(values, resetForm);
-            console.log('Singup form values', values);
+            // console.log('Singup form values', values);
           }}>
           {({handleSubmit}) => (
             <View style={styles.form}>

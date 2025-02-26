@@ -31,10 +31,10 @@ const authSlice = createSlice({
         obj => obj.id === action.payload.id,
       );
       state.users.splice(indexToRemove, 1);
-      console.log(state.users);
+      // console.log(state.users);
     },
   },
 });
 
-export const {authActions} = authSlice.actions;
+export const {setRegisterUser, setLoginUser, setLogOutUser, deleteUser} = authSlice.actions;
 export default authSlice.reducer;

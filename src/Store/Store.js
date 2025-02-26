@@ -25,6 +25,7 @@ const store = configureStore({
     reducer: persistReducers,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
+            immutableCheck: false,
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
                 ignoredPaths: ['someNonSerializableStatePath']

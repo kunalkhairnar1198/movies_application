@@ -19,7 +19,7 @@ import FONT_SIZES from '../../constants/text';
 import CustomButton from '../../Components/Button/CustomButton';
 import Toast from 'react-native-toast-message';
 import {useDispatch, useSelector} from 'react-redux';
-import {authActions} from '../../Store/auth-slice/authslice';
+import { setLoginUser} from '../../Store/auth-slice/authslice';
 
 const Signin = () => {
   const naviagation = useNavigation();
@@ -37,14 +37,14 @@ const Signin = () => {
   });
 
   const loginHandle = (values, resetForm) => {
-    console.log(values);
+    // console.log(values);
     const newlogedinuser = values;
 
     const foundUser = registerUsers.find(
       user => user.email.toLowerCase() === newlogedinuser.email.toLowerCase(),
     );
     if (foundUser) {
-      dispatch(authActions.setLoginUser(foundUser));
+      dispatch(setLoginUser(foundUser));
       Toast.show({
         type: 'success',
         text1: 'Login Successful!',

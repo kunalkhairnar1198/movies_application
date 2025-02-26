@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {authActions} from '../../Store/auth-slice/authslice';
+import { deleteUser, setLogOutUser} from '../../Store/auth-slice/authslice';
 import {useNavigation} from '@react-navigation/native';
 
 import COLORS from '../../constants/colors';
@@ -30,14 +30,14 @@ const Profilescreen = () => {
   };
 
   const logoutHandle = () => {
-    dispatch(authActions.setLogOutUser());
-    console.log('logout');
+    dispatch(setLogOutUser());
+    // console.log('logout');
   };
 
   const deleteUserHandle = id => {
     // console.log(id)
-    dispatch(authActions.deleteUser(id));
-    dispatch(authActions.setLogOutUser());
+    dispatch(deleteUser(id));
+    dispatch(setLogOutUser());
   };
 
   const isModalisOpen = () => {

@@ -6,7 +6,8 @@ import {useCallback, useEffect, useMemo} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {
   getDetailMovies,
-  moviesActions,
+  setMovieFavoriteList,
+  setMovieWatchList,
 } from '../../Store/movie-slice/movieslice';
 
 import FONT_SIZES from '../../constants/text';
@@ -47,11 +48,11 @@ const Detailsscreen = ({route}) => {
   }, [navigation, moviesDetails]);
 
   const addFavoriteListHandler = useCallback(() => {
-    dispatch(moviesActions.setMovieFavoriteList(moviesDetails));
+    dispatch(setMovieFavoriteList(moviesDetails));
   }, [dispatch, moviesDetails]);
 
   const addWatchlistHandler = useCallback(() => {
-    dispatch(moviesActions.setMovieWatchList(moviesDetails));
+    dispatch(setMovieWatchList(moviesDetails));
   }, [dispatch, moviesDetails]);
 
   return (

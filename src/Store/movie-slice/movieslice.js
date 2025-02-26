@@ -112,14 +112,14 @@ const movieSlice = createSlice({
   },
 });
 
-export const moviesActions = movieSlice.actions;
+export const {setTrendingMovies,setPupularMovies,setTopratedMovies,setUpcomingMovies,setDetailsMovies, setClearMovieDetails, setMoviesCast, setMovieFavoriteList, setMovieWatchList} = movieSlice.actions;
 export default movieSlice.reducer;
 
 export const getTrendingMovies = () => {
   return async dispatch => {
     try {
       const response = await axios.get(trendingMoviesEndpoint);
-      dispatch(moviesActions.setTrendingMovies(response.data.results));
+      dispatch(setTrendingMovies(response.data.results));
     } catch (error) {
       console.error('Error fetching trending movies:', error);
     }
@@ -131,7 +131,7 @@ export const getPopularMovies = page => {
     try {
       const response = await axios.get(getPopularMoviesEndpoint(page));
       console.log(response.data.results);
-      dispatch(moviesActions.setPupularMovies(response.data.results));
+      dispatch(setPupularMovies(response.data.results));
     } catch (error) {
       console.log('Error fetching popular Movies', error);
     }
@@ -148,8 +148,8 @@ export const getDetailMovies = id => {
       const cast_res = await axios.get(movieCastEndpoint(id));
 
       console.log(cast_res.data);
-      dispatch(moviesActions.setMoviesCast(cast_res.data));
-      dispatch(moviesActions.setDetailsMovies(response.data));
+      dispatch(setMoviesCast(cast_res.data));
+      dispatch(setDetailsMovies(response.data));
     } catch (error) {
       console.log('Error Fetching movies Details', error);
     }
@@ -162,7 +162,7 @@ export const getTopratedMovies = page => {
     try {
       const response = await axios.get(topRatedMoviesEndpoint(page));
       console.log(response.data.results);
-      dispatch(moviesActions.setTopratedMovies(response.data.results));
+      dispatch(setTopratedMovies(response.data.results));
     } catch (error) {
       console.log('Error Fetching top_rated movies', error);
     }
@@ -174,7 +174,7 @@ export const getUpcomingMovies = page => {
     try {
       const response = await axios.get(upcomingMoviesEndpointPage(page));
       // console.log(response.data);
-      dispatch(moviesActions.setUpcomingMovies(response.data.results));
+      dispatch(setUpcomingMovies(response.data.results));
     } catch (error) {
       console.log('Error Fetching upcomming movies', error);
     }

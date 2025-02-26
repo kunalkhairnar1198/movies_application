@@ -20,6 +20,8 @@ import FONT_SIZES from '../../constants/text';
 import CustomButton from '../../Components/Button/CustomButton';
 import Toast from 'react-native-toast-message';
 
+
+
 const Singup = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -78,6 +80,8 @@ const Singup = () => {
       // console.log('error');
     }
   };
+
+
 
   return (
     <ImageBackground

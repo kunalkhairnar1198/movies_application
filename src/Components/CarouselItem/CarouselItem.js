@@ -4,7 +4,7 @@ import {  Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View 
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import  { image500 } from '../../constants/images'
-import { moviesActions } from '../../Store/movie-slice/movieslice'
+import { setClearMovieDetails } from '../../Store/movie-slice/movieslice'
 
 import COLORS from '../../constants/colors'
 
@@ -17,7 +17,7 @@ const CarouselItem = ({item}) => {
 
   const switchToDetailPageHandler =(id)=>{
       
-      dispatch(moviesActions.setClearMovieDetails());
+      dispatch(setClearMovieDetails());
     
       navigation.navigate('Detailscreen', {id:id})
   }

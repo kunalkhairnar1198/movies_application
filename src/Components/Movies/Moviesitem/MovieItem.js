@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {image500} from '../../../constants/images';
 import {useDispatch, useSelector} from 'react-redux';
-import {moviesActions} from '../../../Store/movie-slice/movieslice';
+import { setClearMovieDetails, setMovieFavoriteList, setMovieWatchList} from '../../../Store/movie-slice/movieslice';
 import {useNavigation, useRoute} from '@react-navigation/native';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -33,7 +33,7 @@ const MovieItem = ({item}) => {
   // console.log(isFavorite, isInWatchlist)
 
   const switchToDetailPageHandler = id => {
-    dispatch(moviesActions.setClearMovieDetails());
+    dispatch(setClearMovieDetails());
 
     if (route.name === 'Profile' || route.name === 'Favorite') {
       navigation.navigate('Homestack', {
@@ -47,11 +47,11 @@ const MovieItem = ({item}) => {
   };
 
   const addFavoriteListHanlder = item => {
-    dispatch(moviesActions.setMovieFavoriteList(item));
+    dispatch(setMovieFavoriteList(item));
   };
 
   const addWatchlistHandler = item => {
-    dispatch(moviesActions.setMovieWatchList(item));
+    dispatch(setMovieWatchList(item));
   };
 
   return (
